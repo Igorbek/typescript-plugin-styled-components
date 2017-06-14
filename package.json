@@ -25,7 +25,7 @@
         "ts-jest": "20"
     },
     "files": [
-        "dist/",
-        "src/"
+        "dist",
+        "src"
     ]
 }
