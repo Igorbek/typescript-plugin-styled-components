@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "build-run": "tsc && node ./src/runner.js",
+    "run-script": "./src/runner.js",
+    "test-baselines": "jest --config ./jest.config.json"
+  },
+  "dependencies": {
+    "jest": "^20.0.4",
+    "typescript": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/glob": "^5.0.30",
+    "@types/jest": "^19.2.4",
+    "@types/node": "^7.0.31",
+    "ts-jest": "^20.0.6"
+  }
+}
