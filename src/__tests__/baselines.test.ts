@@ -1,7 +1,6 @@
 import 'jest';
 import * as ts from 'typescript';
 import * as fs from 'fs';
-import * as glob from 'glob';
 import transformer from '../transformer';
 
 const printer = ts.createPrinter();
@@ -34,11 +33,11 @@ ${indent(obj.transformed)}
 });
 
 function expectTransform(filename: string) {
-    const content = fs.readFileSync('./src/__tests__/baselines/' + filename).toString();
+    const content = fs.readFileSync(__dirname + '/baselines/' + filename).toString();
     const sourceFile = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest);
     const source = printer.printFile(sourceFile);
-    const transformedFile = ts.transform(sourceFile, [transformer]);
-    const transformed = printer.printFile(transformedFile.transformed[0]);
+    const transformedFile = ts.transform(sourceFile, [transformer]).transformed[0];
+    const transformed = printer.printFile(transformedFile);
 
     const snapshot: TransformBaseline = {
         type: 'transform-baseline',
@@ -48,9 +47,10 @@ function expectTransform(filename: string) {
         transformed
     };
 
-    expect(snapshot).toMatchSnapshot();
+    expect(snapshot).toMatchSnapshot(filename);
 }
 
-const files = ['sample1.ts'];
+const files = fs.readdirSync(__dirname + '/baselines')
+    .filter(f => f.toLowerCase().endsWith('.tsx') || f.toLowerCase().endsWith('.ts'));
 
 files.forEach(file => it(file, () => expectTransform(file)));
