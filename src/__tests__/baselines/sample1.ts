@@ -25,3 +25,7 @@ export default styled.link`
 export const SmallButton = Button.extend`
   font-size: .7em;
 `;
+
+const MiniButton = styled(SmallButton).attrs({ size: 'mini' })`
+  font-size: .1em;
+`;
