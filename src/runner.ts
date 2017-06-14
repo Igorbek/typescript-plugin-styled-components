@@ -1,6 +1,8 @@
 import * as ts from 'typescript';
 
-import sampleTransformer from './transformer';
+import createTransformer from './';
+
+const sampleTransformer = createTransformer();
 
 function main(files: string[]) {
   // Normally these would be parsed from tsconfig.json

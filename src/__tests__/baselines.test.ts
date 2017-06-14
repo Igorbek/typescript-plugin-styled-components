@@ -1,9 +1,10 @@
 import 'jest';
 import * as ts from 'typescript';
 import * as fs from 'fs';
-import transformer from '../transformer';
+import createTransformer from '../';
 
 const printer = ts.createPrinter();
+const transformer = createTransformer();
 
 interface TransformBaseline {
     type: 'transform-baseline';
@@ -31,6 +32,7 @@ ${indent(obj.transformed)}
 
 `
 });
+
 
 function expectTransform(filename: string) {
     const content = fs.readFileSync(__dirname + '/baselines/' + filename).toString();
