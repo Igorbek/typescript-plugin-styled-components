@@ -1,21 +1,21 @@
 {
     "name": "typescript-plugin-styled-components",
     "version": "0.0.1",
-    "description": "TypeScript transformer for improving the debugging experience to styled-components",
-    "main": "index.js",
+    "description": "TypeScript transformer for improving the debugging experience of styled-components",
+    "main": "dist/index.js",
     "repository": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
     "author": "Igor Oleinikov <igor@oleinikov.ru>",
     "license": "MIT",
     "scripts": {
-        "build-run": "tsc && node ./src/runner.js",
-        "run-script": "./src/runner.js",
-        "test-baselines": "jest --config ./jest.config.json",
-        "test:watch": "yarn test-baselines -- --watch",
-        "test": "yarn test-baselines"
+        "build": "tsc",
+        "test:baselines": "jest --config ./jest.config.json",
+        "test:watch": "yarn test:baselines -- --watch",
+        "test": "yarn test:baselines"
     },
+    "typings": "dist/index.d.ts",
     "dependencies": {
         "jest": "20",
-        "typescript": "2.3"
+        "typescript": "~2.3.4 || 2.4"
     },
     "devDependencies": {
         "@types/jest": "^19.2.4",
