@@ -1,10 +1,13 @@
 {
     "name": "typescript-plugin-styled-components",
-    "version": "0.0.1-preview",
+    "version": "0.0.2",
     "description": "TypeScript transformer for improving the debugging experience of styled-components",
     "main": "dist/index.js",
     "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
-    "repository": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
+    "repository": {
+        "url": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
+        "type": "git"
+    },
     "author": "Igor Oleinikov <igor@oleinikov.ru>",
     "license": "MIT",
     "scripts": {
@@ -23,5 +26,9 @@
         "@types/node": "^7.0.31",
         "styled-components": "^2.0.1",
         "ts-jest": "20"
-    }
+    },
+    "files": [
+        "dist",
+        "src"
+    ]
 }
