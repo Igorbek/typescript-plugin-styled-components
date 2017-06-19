@@ -66,6 +66,7 @@ function defaultGetDisplayName(filename: string, bindingName: string | undefined
     return bindingName;
 }
 
+export function createTransformer(options?: Partial<Options>): ts.TransformerFactory<ts.SourceFile>
 export function createTransformer({ getDisplayName = defaultGetDisplayName }: Partial<Options> = {}) {
     /**
      * Infers display name of a styled component.
