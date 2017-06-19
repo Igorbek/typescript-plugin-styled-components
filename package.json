@@ -1,6 +1,6 @@
 {
     "name": "typescript-plugin-styled-components",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "description": "TypeScript transformer for improving the debugging experience of styled-components",
     "main": "dist/index.js",
     "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
@@ -12,6 +12,7 @@
     "license": "MIT",
     "scripts": {
         "build": "tsc",
+        "build:prod": "tsc --sourceMap false",
         "test:baselines": "jest --config ./jest.config.json",
         "test:watch": "yarn test:baselines -- --watch",
         "test": "yarn test:baselines"
@@ -19,7 +20,7 @@
     "typings": "dist/index.d.ts",
     "dependencies": {
         "jest": "20",
-        "typescript": "~2.3.4 || 2.4"
+        "typescript": "^2.3.4"
     },
     "devDependencies": {
         "@types/jest": "^19.2.4",
@@ -28,7 +29,6 @@
         "ts-jest": "20"
     },
     "files": [
-        "dist",
-        "src"
+        "dist"
     ]
 }

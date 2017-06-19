@@ -2201,7 +2201,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-"typescript@~2.3.4 || 2.4":
+typescript@^2.3.4:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.0.tgz#aef5a8d404beba36ad339abf079ddddfffba86dd"
 
