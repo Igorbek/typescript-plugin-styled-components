@@ -1,6 +1,6 @@
 # `typescript-plugin-styled-components`
 
-This is a TypeScript transformer that improves development experience of [`styled-components`](styled-components.com).
+This is a TypeScript transformer that improves development experience of [`styled-components`](https://www.styled-components.com/).
 
 The main purpose is to provide compile-time information of creates styled components, such as names of these components, for the run-time, allowing to operate with proper names of such the components.
 
