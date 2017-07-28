@@ -1,34 +1,35 @@
 {
-    "name": "typescript-plugin-styled-components",
-    "version": "0.0.4",
-    "description": "TypeScript transformer for improving the debugging experience of styled-components",
-    "main": "dist/index.js",
-    "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
-    "repository": {
-        "url": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
-        "type": "git"
-    },
-    "author": "Igor Oleinikov <igor@oleinikov.ru>",
-    "license": "MIT",
-    "scripts": {
-        "build": "tsc",
-        "build:prod": "tsc --sourceMap false",
-        "test:baselines": "jest --config ./jest.config.json",
-        "test:watch": "yarn test:baselines -- --watch",
-        "test": "yarn test:baselines"
-    },
-    "typings": "dist/index.d.ts",
-    "dependencies": {
-        "jest": "20",
-        "typescript": "^2.3.4"
-    },
-    "devDependencies": {
-        "@types/jest": "^19.2.4",
-        "@types/node": "^7.0.31",
-        "styled-components": "^2.0.1",
-        "ts-jest": "20"
-    },
-    "files": [
-        "dist"
-    ]
+  "name": "typescript-plugin-styled-components",
+  "version": "0.0.4",
+  "description": "TypeScript transformer for improving the debugging experience of styled-components",
+  "main": "dist/index.js",
+  "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
+  "repository": {
+    "url": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
+    "type": "git"
+  },
+  "author": "Igor Oleinikov <igor@oleinikov.ru>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "build:prod": "tsc --sourceMap false",
+    "test:baselines": "jest --config ./jest.config.json",
+    "test:watch": "yarn test:baselines -- --watch",
+    "test": "yarn test:baselines"
+  },
+  "typings": "dist/index.d.ts",
+  "dependencies": {
+    "jest": "20",
+    "ts-is-kind": "^1.0.0",
+    "typescript": "^2.3.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^19.2.4",
+    "@types/node": "^7.0.31",
+    "styled-components": "^2.0.1",
+    "ts-jest": "20"
+  },
+  "files": [
+    "dist"
+  ]
 }
