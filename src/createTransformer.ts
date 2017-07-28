@@ -1,23 +1,31 @@
 import * as ts from 'typescript';
+import {
+    isPropertyAccessExpression,
+    isCallExpression,
+    isIdentifier,
+    isVariableDeclaration,
+    isExportAssignment,
+    isTaggedTemplateExpression,
+} from 'ts-is-kind';
 
 import {Options} from './models/Options';
 
 /** Detects that a node represents a styled function
  * Recognizes the following patterns:
- * 
+ *
  * styled.tag
  * Component.extend
  * styled(Component)
  * styledFunction.attrs(attributes)
 */
 function isStyledFunction(node: ts.Node): boolean {
-    if (node.kind === ts.SyntaxKind.PropertyAccessExpression) {
-        if (isStyledObject((node as ts.PropertyAccessExpression).expression)) {
+    if (isPropertyAccessExpression(node)) {
+        if (isStyledObject(node.expression)) {
             return true;
         }
 
-        if ((node as ts.PropertyAccessExpression).name.text === 'extend'
-            && isValidComponent((node as ts.PropertyAccessExpression).expression)) {
+        if (node.name.text === 'extend'
+            && isValidComponent(node.expression)) {
 
             return true;
         }
@@ -25,14 +33,13 @@ function isStyledFunction(node: ts.Node): boolean {
         return false;
     }
 
-    if (node.kind === ts.SyntaxKind.CallExpression
-        && (node as ts.CallExpression).arguments.length === 1) {
+    if (isCallExpression(node) && node.arguments.length === 1) {
 
-        if (isStyledObject((node as ts.CallExpression).expression)) {
+        if (isStyledObject(node.expression)) {
             return true;
         }
 
-        if (isStyledAttrs((node as ts.CallExpression).expression)) {
+        if (isStyledAttrs(node.expression)) {
             return true;
         }
     }
@@ -41,11 +48,11 @@ function isStyledFunction(node: ts.Node): boolean {
 }
 
 function isStyledObject(node: ts.Node) {
-    return node && node.kind === ts.SyntaxKind.Identifier && (node as ts.Identifier).text === 'styled';
+    return node && isIdentifier(node) && node.text === 'styled';
 }
 
 function isValidComponent(node: ts.Node) {
-    return node && node.kind === ts.SyntaxKind.Identifier && isValidComponentName((node as ts.Identifier).text);
+    return node && isIdentifier(node) && isValidComponentName(node.text);
 }
 
 function isValidTagName(name: string) {
@@ -57,8 +64,8 @@ function isValidComponentName(name: string) {
 }
 
 function isStyledAttrs(node: ts.Node) {
-    return node && node.kind === ts.SyntaxKind.PropertyAccessExpression
-        && (node as ts.PropertyAccessExpression).name.text === 'attrs'
+    return node && isPropertyAccessExpression(node)
+        && node.name.text === 'attrs'
         && isStyledFunction((node as ts.PropertyAccessExpression).expression);
 }
 
@@ -76,12 +83,11 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName }: Pa
      * export default styled...
     */
     function getDisplayNameFromNode(node: ts.Node): string | undefined {
-        if (node.kind === ts.SyntaxKind.VariableDeclaration
-            && (node as ts.VariableDeclaration).name.kind === ts.SyntaxKind.Identifier) {
-            return getDisplayName(node.getSourceFile().fileName, ((node as ts.VariableDeclaration).name as ts.Identifier).text);
+        if (isVariableDeclaration(node) && isIdentifier(node.name)) {
+            return getDisplayName(node.getSourceFile().fileName, node.name.text);
         }
 
-        if (node.kind === ts.SyntaxKind.ExportAssignment) {
+        if (isExportAssignment(node)) {
             return getDisplayName(node.getSourceFile().fileName, undefined);
         }
 
@@ -91,10 +97,11 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName }: Pa
     const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
         const visitor: ts.Visitor = (node) => {
             if (node.parent
-                && node.parent.kind === ts.SyntaxKind.TaggedTemplateExpression
-                && (node.parent as ts.TaggedTemplateExpression).tag === node
+
+                && isTaggedTemplateExpression(node.parent)
+                && node.parent.tag === node
                 && node.parent.parent
-                && node.parent.parent.kind === ts.SyntaxKind.VariableDeclaration
+                && isVariableDeclaration(node.parent.parent)
                 && isStyledFunction(node)) {
 
                 const displayName = getDisplayNameFromNode(node.parent.parent);
