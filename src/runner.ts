@@ -26,4 +26,5 @@ function main(files: string[]) {
       {before: beforeTransforms, after: afterTransforms});
 }
 
-main(['src/__tests__/baselines/sample3.tsx']);
+const files = process.argv.slice(2);
+main(files);

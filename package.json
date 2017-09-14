@@ -15,7 +15,8 @@
         "build:prod": "tsc --sourceMap false",
         "test:baselines": "jest --config ./jest.config.json",
         "test:watch": "yarn test:baselines -- --watch",
-        "test": "yarn test:baselines"
+        "test": "yarn test:baselines",
+        "runner": "ts-node ./src/runner.ts"
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
@@ -28,7 +29,8 @@
         "@types/node": "^7.0.31",
         "@types/react": "^16.0.5",
         "styled-components": "^2.1.2",
-        "ts-jest": "20"
+        "ts-jest": "20",
+        "ts-node": "^3.3.0"
     },
     "files": [
         "dist"
