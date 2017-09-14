@@ -10,7 +10,8 @@ function main(files: string[]) {
     skipLibCheck: true,
     outDir: 'built',
     module: ts.ModuleKind.CommonJS,
-    noEmitOnError: false
+    noEmitOnError: false,
+    jsx: ts.JsxEmit.React
   };
 
   const beforeTransforms = [sampleTransformer];
@@ -25,4 +26,4 @@ function main(files: string[]) {
       {before: beforeTransforms, after: afterTransforms});
 }
 
-main(['src/__tests__/baselines/sample1.ts']);
+main(['src/__tests__/baselines/sample3.tsx']);
