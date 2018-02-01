@@ -20,7 +20,6 @@
     },
     "typings": "dist/index.d.ts",
     "dependencies": {
-        "jest": "20",
         "ts-is-kind": "^1.0.0",
         "typescript": "^2.5.2"
     },
@@ -29,6 +28,7 @@
         "@types/node": "^7.0.31",
         "@types/react": "^16.0.5",
         "styled-components": "^2.1.2",
+        "jest": "20",
         "ts-jest": "20",
         "ts-node": "^3.3.0"
     },
