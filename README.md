@@ -31,11 +31,11 @@ In the `webpack.config.js` file in the section where **awesome-typescript-loader
 
 ```js
 // 1. import default from the plugin module
-var createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 // 2. create a transformer;
 // the factory additionally accepts an options object which described below
-var styledComponentsTransformer = createStyledComponentsTransformer();
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 // 3. add getCustomTransformer method to the loader config
 var config = {
@@ -56,17 +56,20 @@ var config = {
 };
 ```
 
+Please note, that in the development mode, `awesome-typescript-loader` uses multiple separate processes to speed up compilation. In that mode the above configuration cannot work because functions, which `getCustomTransformers` is, are not transferrable between processes.
+To solve this please refer to [Forked process configuration](#forked-process-configuration) section.
+
 ## `ts-loader`
 
 In the `webpack.config.js` file in the section where **ts-loader** is configured as a loader:
 
 ```js
 // 1. import default from the plugin module
-var createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
 
 // 2. create a transformer;
 // the factory additionally accepts an options object which described below
-var styledComponentsTransformer = createStyledComponentsTransformer();
+const styledComponentsTransformer = createStyledComponentsTransformer();
 
 // 3. add getCustomTransformer method to the loader config
 var config = {
@@ -85,6 +88,44 @@ var config = {
     }
     ...
 };
+```
+
+Please note, when `awesome-typescript-loader` is used with `HappyPack` or `thread-loader`, they use multiple separate processes to speed up compilation. In that mode the above configuration cannot work because functions, which `getCustomTransformers` is, are not transferrable between processes.
+To solve this please refer to [Forked process configuration](#forked-process-configuration) section.
+
+## Forked process configuration
+
+To configure the transformer for development mode in `awesome-typescript-loader` or `ts-loader` with `HappyPack` or `thread-loader`, you need to make `getCustomTransformers` a resolvoble module name instead of the function. Since the configuration is very similar, here's an example:
+
+### 1. Move `styledComponentsTransformer` into a separate file
+
+Let's assume it is in the same folder as your `webpack.config` and has name `webpack.ts-transformers.js`:
+```js
+// 1. import default from the plugin module
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+
+// 2. create a transformer;
+// the factory additionally accepts an options object which described below
+const styledComponentsTransformer = createStyledComponentsTransformer();
+
+// 3. create getCustomTransformer function
+const getCustomTransformers: () => ({ before: [styledComponentsTransformer] });
+
+// 4. export getCustomTransformers
+module.exports = getCustomTransformers;
+```
+
+### 2. Change the loader's options to point to that file instead of explicit function
+
+```diff
+-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+-const styledComponentsTransformer = createStyledComponentsTransformer();
+
+options: {
+    ... // other loader's options
+-    getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
++    getCustomTransformers: path.join(__dirname, './webpack.ts-transformers.js')
+}
 ```
 
 # API
