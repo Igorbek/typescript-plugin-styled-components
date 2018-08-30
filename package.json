@@ -19,11 +19,8 @@
         "runner": "ts-node ./src/runner.ts"
     },
     "typings": "dist/index.d.ts",
-    "dependencies": {
-        "ts-is-kind": "^1.0.0"
-    },
     "peerDependencies": {
-        "typescript": "^2.5.2"
+        "typescript": "^2.5.2 || ^3.0"
     },
     "devDependencies": {
         "@types/jest": "^19.2.4",

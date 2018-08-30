@@ -6,7 +6,7 @@ import {
     isVariableDeclaration,
     isExportAssignment,
     isTaggedTemplateExpression,
-} from 'ts-is-kind';
+} from './ts-is-kind';
 
 import {Options} from './models/Options';
 
