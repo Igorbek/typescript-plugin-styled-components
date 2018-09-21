@@ -6,6 +6,8 @@ The main purpose is to provide compile-time information of creates styled compon
 
 The plugin was mostly inspired by great Babel's plugin [`babel-plugin-styled-components`](https://github.com/styled-components/babel-plugin-styled-components) and partially provides similar functionality for TypeScript users.
 
+If you like it, consider [![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/igorbek)
+
 # Installation
 
 The following command adds the packages to the project as a development-time dependency:
