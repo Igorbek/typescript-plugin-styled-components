@@ -5,4 +5,9 @@ export interface Options {
      * Default strategy is to use bindingName if it's defined and use inference algorithm from filename otherwise.
      */
     getDisplayName(filename: string, bindingName: string | undefined): string | undefined;
+        
+    styledIdentifiers: string[];
+
+    useSSR: boolean;
+
 }
