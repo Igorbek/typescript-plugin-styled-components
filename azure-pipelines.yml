@@ -9,11 +9,6 @@ strategy:
       node_version: 9.x
 
 steps:
-- task: gittools.gitversion.gitversion-task.GitVersion@4
-  displayName: GitVersion
-  inputs:
-    preferBundledVersion: false
-
 - task: NodeTool@0
   inputs:
     versionSpec: $(node_version)
