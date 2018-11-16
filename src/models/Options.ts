@@ -8,6 +8,7 @@ export interface Options {
         
     styledIdentifiers: string[];
 
-    useSSR: boolean;
-
+    ssr: boolean;
+    displayName: boolean;
+    rootCheck: string;
 }

@@ -77,7 +77,7 @@ function defaultGetDisplayName(filename: string, bindingName: string | undefined
 }
 
 export function createTransformer(options?: Partial<Options>): ts.TransformerFactory<ts.SourceFile>
-export function createTransformer({ getDisplayName = defaultGetDisplayName, styledIdentifiers = [], useSSR } : Partial<Options> = {}) {
+export function createTransformer({ getDisplayName = defaultGetDisplayName, styledIdentifiers = [], ssr, displayName = true, rootCheck = 'package.json' } : Partial<Options> = {}) {
 
     /**
      * Infers display name of a styled component.
@@ -104,7 +104,7 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
             return null
         }
         let dir = path.dirname(filename)
-        if (fs.existsSync(path.join(dir, 'package.json'))) {
+        if (fs.existsSync(path.join(dir, rootCheck))) {
             return dir
         } else if (dir !== filename) {
             return findModuleRoot(dir)
@@ -118,7 +118,7 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
             const fileName = node.getSourceFile().fileName;
             const moduleRoot = findModuleRoot(fileName)
             const filePath = moduleRoot ? path.relative(moduleRoot, fileName).replace(separatorRegExp, '/') : '';
-            return 'sc-' + hash(filePath);
+            return 'ssr-' + hash(`${getDisplayNameFromNode(node)}${filePath}`);
         }
         return undefined;
     }
@@ -133,24 +133,25 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
                 && isVariableDeclaration(node.parent.parent)
                 && isStyledFunction(node, styledIdentifiers as string[])) {
 
-                const displayName = getDisplayNameFromNode(node.parent.parent);
-                let componentId;
-                if(useSSR){
-                    componentId = getIdFromNode(node.parent.parent);
-                }
+                const styledConfig = [];
 
                 if (displayName) {
-                    const styledConfig = [
-                        ts.createPropertyAssignment('displayName', ts.createLiteral(displayName)),
-                    ];
-                    if(componentId){
-                        styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId)));                        
-                    }
-                    return ts.createCall(
-                        ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
-                        undefined,
-                        [ts.createObjectLiteral(styledConfig),]);
+                    const displayNameValue = getDisplayNameFromNode(node.parent.parent);
+                    if(displayNameValue){
+                        styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
+                    }                    
                 }
+                if(ssr){
+                    const componentId = getIdFromNode(node.parent.parent);
+                    if(componentId){
+                        styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
+                    }                                           
+                }
+                return ts.createCall(
+                    ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
+                    undefined,
+                    [ts.createObjectLiteral(styledConfig),]);
+                
             }
 
             ts.forEachChild(node, n => {
