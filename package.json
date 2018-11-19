@@ -2,7 +2,7 @@
     "name": "typescript-plugin-styled-components",
     "version": "0.0.6",
     "description": "TypeScript transformer for improving the debugging experience of styled-components",
-    "main": "distor/index.js",
+    "main": "dist/index.js",
     "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
     "repository": {
         "url": "https://github.com/Igorbek/typescript-plugin-styled-components.git",
