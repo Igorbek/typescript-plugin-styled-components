@@ -116,7 +116,7 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
     function getIdFromNode(node: ts.Node): string | undefined {
         if ((isVariableDeclaration(node) && isIdentifier(node.name)) || isExportAssignment(node)) {
             const fileName = node.getSourceFile().fileName;
-            const moduleRoot = findModuleRoot(fileName)
+            const moduleRoot = findModuleRoot(fileName);
             const filePath = moduleRoot ? path.relative(moduleRoot, fileName).replace(separatorRegExp, '/') : '';
             return 'ssr-' + hash(`${getDisplayNameFromNode(node)}${filePath}`);
         }
@@ -141,9 +141,9 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
                         styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
                     }                    
                 }
-                if(ssr){
+                if (ssr) {
                     const componentId = getIdFromNode(node.parent.parent);
-                    if(componentId){
+                    if (componentId) {
                         styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
                     }                                           
                 }
