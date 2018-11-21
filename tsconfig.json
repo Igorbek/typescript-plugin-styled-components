@@ -58,6 +58,7 @@
     "exclude": [
         "node_modules",
         "src/__tests__",
-        "src/runner.ts"
+        "src/runner.ts",
+        "example"
     ]
 }

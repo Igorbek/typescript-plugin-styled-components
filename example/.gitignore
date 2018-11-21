@@ -1,0 +1,16 @@
+dist/
+node_modules/
+
+# OS generated files #
+######################
+.AppleDouble/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.idea
+*.happypack*
+ehthumbs.db
+Thumbs.db
+npm-debug.log
