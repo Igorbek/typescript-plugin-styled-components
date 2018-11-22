@@ -121,7 +121,7 @@ export function createTransformer({
 
     const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
         const { sourceRoot } = context.getCompilerOptions();
-        
+
         return (node) => {
             let lastComponentPosition = 0;
 
@@ -134,34 +134,34 @@ export function createTransformer({
                     && isVariableDeclaration(node.parent.parent)
                     && isStyledFunction(node, identifiers)
                 ) {
-    
+
                     const styledConfig = [];
-    
+
                     if (displayName) {
                         const displayNameValue = getDisplayNameFromNode(node.parent.parent);
-                        if(displayNameValue){
+                        if (displayNameValue) {
                             styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
                         }                    
                     }
-    
+
                     if (ssr) {
                         const componentId = getIdFromNode(node.parent.parent, sourceRoot, ++lastComponentPosition);
                         if (componentId) {
                             styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
                         }                                           
                     }
-    
+
                     return ts.createCall(
                         ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
                         undefined,
                         [ts.createObjectLiteral(styledConfig)]);
                 }
-    
+
                 ts.forEachChild(node, n => {
                     if (!n.parent)
                         n.parent = node;
                 });
-    
+
                 return ts.visitEachChild(node, visitor, context);
             }
 
