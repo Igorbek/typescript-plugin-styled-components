@@ -41,13 +41,13 @@ TypeScript after transform:
 
   import styled from 'styled-components';
   export function createButtons() {
-      const A = styled.button.withConfig({ displayName: "A", componentId: "sc-12flnm5" }) \` color: red; \`;
-      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-1nka2f9" }) \` color: blue; \`;
+      const A = styled.button.withConfig({ displayName: "A", componentId: "sc-hana72" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-ke4nds" }) \` color: blue; \`;
       return { A, B };
   }
   export function createDivs() {
-      const A = styled.div.withConfig({ displayName: "A", componentId: "sc-12flnm5" }) \` color: green; \`;
-      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-1nka2f9" }) \` color: yellow; \`;
+      const A = styled.div.withConfig({ displayName: "A", componentId: "sc-1q7vmnt" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-7q8oop" }) \` color: yellow; \`;
       return { A, B };
   }
   
@@ -109,26 +109,26 @@ TypeScript before transform:
 TypeScript after transform:
 
   import styled from 'styled-components';
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-mm3di7" }) \`
+  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-1okqsxw" }) \`
     color: red;
   \`;
   declare const nonStyled: any;
   const NonButton = nonStyled.button \`
     yo
   \`;
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-j426hc" }) \`
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-ce0fkl" }) \`
     color: blue;
   \`;
-  const SuperButton = Button.extend.withConfig({ displayName: "SuperButton", componentId: "sc-w8sv2y" }) \`
+  const SuperButton = Button.extend.withConfig({ displayName: "SuperButton", componentId: "sc-10xv1bi" }) \`
     color: super;
   \`;
   export default styled.link \`
     color: black;
   \`;
-  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton", componentId: "sc-f57us" }) \`
+  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton", componentId: "sc-8sh5f7" }) \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-feuq4j" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-v7haos" }) \`
     font-size: .1em;
   \`;
   
@@ -164,7 +164,7 @@ TypeScript after transform:
   const styled2 = styled;
   const NonButton = styled.button;
   const NonStyled = styled \`  color: red; \`;
-  const Link = styled(NonStyled).withConfig({ displayName: "Link", componentId: "sc-1bdnxv3" }) \` color: red; \`;
+  const Link = styled(NonStyled).withConfig({ displayName: "Link", componentId: "sc-1xlc242" }) \` color: red; \`;
   
 
 
@@ -213,7 +213,7 @@ TypeScript after transform:
   interface LabelProps {
       size: number;
   }
-  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "sc-vgngw" }) \`
+  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "sc-1ydgk9x" }) \`
       font-size: \${(props: LabelProps) => props.size + 'px'}
   \`;
   const LabeledLink = () => <SmallButton />;
