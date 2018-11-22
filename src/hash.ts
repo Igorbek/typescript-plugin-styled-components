@@ -1,8 +1,20 @@
-export const hash = (str: string) => {
-    let l = str.length;
-    let h = l;
-    let i = 0;
-    let k;
+/**
+ * JS Implementation of MurmurHash2
+ *
+ * @author <a href="mailto:gary.court@gmail.com">Gary Court</a>
+ * @see http://github.com/garycourt/murmurhash-js
+ * @author <a href="mailto:aappleby@gmail.com">Austin Appleby</a>
+ * @see http://sites.google.com/site/murmurhash/
+ *
+ * @param str ASCII only
+ * @param seed Positive integer only
+ * @return 32-bit positive integer hash
+ */
+function murmurhash2_32_gc(str: string, seed: number = 0) {
+    var l = str.length,
+        h = seed ^ l,
+        i = 0,
+        k;
 
     while (l >= 4) {
         k =
@@ -46,5 +58,9 @@ export const hash = (str: string) => {
         ((((h >>> 16) * 0x5bd1e995) & 0xffff) << 16);
     h ^= h >>> 15;
 
-    return (h >>> 0).toString(36);
+    return h >>> 0;
+}
+
+export function hash(str: string) {
+    return murmurhash2_32_gc(str).toString(36);
 }
