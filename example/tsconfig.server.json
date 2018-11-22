@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node" ,
+    "plugins": [
+      { "transform": "../src", "useSSR": true }
+    ]
+  },
+  "include": [
+    "./webpack/**/*",
+    "./src/**/*"
+  ]
+}

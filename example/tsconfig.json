@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "allowUnreachableCode": true,
+    "pretty": true,
+    "module": "esnext",
+    "moduleResolution": "node" ,
+    "target": "es2015",
+    "jsx": "react",
+    "baseUrl": "src",
+    "lib": ["dom", "es6"]
+  },
+  "include": [
+    "./webpack/**/*",
+    "./src/**/*"
+  ]
+}
