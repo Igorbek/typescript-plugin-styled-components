@@ -1,32 +1,49 @@
 export interface Options {
     /**
      * This method is used to determine component display name from filename and its binding name.
-     * 
-     * Default strategy is to use bindingName if it's defined and use inference algorithm from filename otherwise.
+     *
+     * Default strategy is to use `bindingName` if it's defined and use inference algorithm from `filename` otherwise.
      */
     getDisplayName(filename: string, bindingName: string | undefined): string | undefined;
     
     /**
-     * This array allow to identify the node name in case of style-components wrapper functions
+     * This option allows to customize identifiers used by `styled-components` API functions.
      */
-    styledIdentifiers: string[];
+    identifiers: CustomStyledIdentifiers;
     
     /**
-     * If set to true generates a unique componentId composed by the file path and the component name (default bindingName)
-     * default value: false
+     * By adding a unique identifier to every styled component, this plugin avoids checksum mismatches
+     * due to different class generation on the client and on the server.
+     * This option allows to disable component id generation by setting it to `false`
+     * 
+     * @defaultValue `true`
      */
     ssr: boolean;
 
     /**
-     * If set to true sets the component dispaly name
-     * default value: true
+     * This option enhances the attached CSS class name on each component with richer output
+     * to help identify your components in the DOM without React DevTools.
+     * It also adds allows you to see the component's `displayName` in React DevTools.
+     * 
+     * To disable `displayName` generation set this option to `false`
+     * 
+     * @defaultValue `true`
      */
     displayName: boolean;
+}
 
-    
+export interface CustomStyledIdentifiers {
     /**
-     * String to determine what is the project root
-     * default value: package.json
+     * Identifiers of `styled` function.
+     *
+     * @defaultValue `['styled']`
      */
-    rootCheck: string;
+    styled?: string[];
+
+    /**
+     * Identifiers of `attrs` function.
+     *
+     * @defaultValue `['attrs']`
+     */
+    attrs?: string[];
 }

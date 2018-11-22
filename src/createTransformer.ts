@@ -8,9 +8,8 @@ import {
     isTaggedTemplateExpression,
 } from './ts-is-kind';
 
-import {Options} from './models/Options';
+import { Options, CustomStyledIdentifiers } from './models/Options';
 import { hash } from './hash';
-import * as fs from 'fs';
 import * as path from 'path';
 
 /** Detects that a node represents a styled function
@@ -21,9 +20,9 @@ import * as path from 'path';
  * styled(Component)
  * styledFunction.attrs(attributes)
 */
-function isStyledFunction(node: ts.Node, styledIdentifiers: string[]): boolean {
+function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): boolean {
     if (isPropertyAccessExpression(node)) {
-        if (isStyledObject(node.expression, styledIdentifiers)) {
+        if (isStyledObject(node.expression, identifiers)) {
             return true;
         }
 
@@ -38,11 +37,11 @@ function isStyledFunction(node: ts.Node, styledIdentifiers: string[]): boolean {
 
     if (isCallExpression(node) && node.arguments.length === 1) {
 
-        if (isStyledObject(node.expression, styledIdentifiers)) {
+        if (isStyledObject(node.expression, identifiers)) {
             return true;
         }
 
-        if (isStyledAttrs(node.expression, styledIdentifiers)) {
+        if (isStyledAttrs(node.expression, identifiers)) {
             return true;
         }
     }
@@ -50,8 +49,12 @@ function isStyledFunction(node: ts.Node, styledIdentifiers: string[]): boolean {
     return false;
 }
 
-function isStyledObject(node: ts.Node, styledIdentifiers: string[]) {
-    return node && isIdentifier(node) && (node.text === 'styled' || styledIdentifiers.indexOf(node.text) !== -1);
+function isStyledObjectIdentifier(name: string, { styled: styledIdentifiers = ['styled'] }: CustomStyledIdentifiers) {
+    return styledIdentifiers.indexOf(name) >= 0;
+}
+
+function isStyledObject(node: ts.Node, identifiers: CustomStyledIdentifiers) {
+    return node && isIdentifier(node) && isStyledObjectIdentifier(node.text, identifiers);
 }
 
 function isValidComponent(node: ts.Node) {
@@ -66,10 +69,14 @@ function isValidComponentName(name: string) {
     return name[0] === name[0].toUpperCase();
 }
 
-function isStyledAttrs(node: ts.Node, styledIdentifiers: string[]) {
+function isStyledAttrsIdentifier(name: string, { attrs: attrsIdentifiers = ['attrs'] }: CustomStyledIdentifiers) {
+    return attrsIdentifiers.indexOf(name) >= 0;
+}
+
+function isStyledAttrs(node: ts.Node, identifiers: CustomStyledIdentifiers) {
     return node && isPropertyAccessExpression(node)
-        && node.name.text === 'attrs'
-        && isStyledFunction((node as ts.PropertyAccessExpression).expression, styledIdentifiers);
+        && isStyledAttrsIdentifier(node.name.text, identifiers)
+        && isStyledFunction((node as ts.PropertyAccessExpression).expression, identifiers);
 }
 
 function defaultGetDisplayName(filename: string, bindingName: string | undefined): string | undefined {
@@ -77,7 +84,12 @@ function defaultGetDisplayName(filename: string, bindingName: string | undefined
 }
 
 export function createTransformer(options?: Partial<Options>): ts.TransformerFactory<ts.SourceFile>
-export function createTransformer({ getDisplayName = defaultGetDisplayName, styledIdentifiers = [], ssr, displayName = true, rootCheck = 'package.json' } : Partial<Options> = {}) {
+export function createTransformer({
+    getDisplayName = defaultGetDisplayName,
+    identifiers = {},
+    ssr = true,
+    displayName = true
+} : Partial<Options> = {}) {
 
     /**
      * Infers display name of a styled component.
@@ -98,71 +110,63 @@ export function createTransformer({ getDisplayName = defaultGetDisplayName, styl
         return undefined;
     }
 
-    const separatorRegExp = new RegExp(`\\${path.sep}`, 'g');
-    const findModuleRoot = (filename: string): string | null => {
-        if (!filename) {
-            return null
-        }
-        let dir = path.dirname(filename)
-        if (fs.existsSync(path.join(dir, rootCheck))) {
-            return dir
-        } else if (dir !== filename) {
-            return findModuleRoot(dir)
-        } else {
-            return null
-        }
-    }
-
-    function getIdFromNode(node: ts.Node): string | undefined {
+    function getIdFromNode(node: ts.Node, sourceRoot: string | undefined, position: number): string | undefined {
         if ((isVariableDeclaration(node) && isIdentifier(node.name)) || isExportAssignment(node)) {
             const fileName = node.getSourceFile().fileName;
-            const moduleRoot = findModuleRoot(fileName);
-            const filePath = moduleRoot ? path.relative(moduleRoot, fileName).replace(separatorRegExp, '/') : '';
-            return 'ssr-' + hash(`${getDisplayNameFromNode(node)}${filePath}`);
+            const filePath = sourceRoot ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep) : fileName;
+            return 'sc-' + hash(`${getDisplayNameFromNode(node)}${filePath}${position}`);
         }
         return undefined;
     }
 
     const transformer: ts.TransformerFactory<ts.SourceFile> = (context) => {
-        const visitor: ts.Visitor = (node) => {
-            if (node.parent
+        const { sourceRoot } = context.getCompilerOptions();
 
-                && isTaggedTemplateExpression(node.parent)
-                && node.parent.tag === node
-                && node.parent.parent
-                && isVariableDeclaration(node.parent.parent)
-                && isStyledFunction(node, styledIdentifiers as string[])) {
+        return (node) => {
+            let lastComponentPosition = 0;
 
-                const styledConfig = [];
+            const visitor: ts.Visitor = (node) => {
+                if (
+                    node.parent
+                    && isTaggedTemplateExpression(node.parent)
+                    && node.parent.tag === node
+                    && node.parent.parent
+                    && isVariableDeclaration(node.parent.parent)
+                    && isStyledFunction(node, identifiers)
+                ) {
 
-                if (displayName) {
-                    const displayNameValue = getDisplayNameFromNode(node.parent.parent);
-                    if(displayNameValue){
-                        styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
-                    }                    
+                    const styledConfig = [];
+
+                    if (displayName) {
+                        const displayNameValue = getDisplayNameFromNode(node.parent.parent);
+                        if (displayNameValue) {
+                            styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
+                        }                    
+                    }
+
+                    if (ssr) {
+                        const componentId = getIdFromNode(node.parent.parent, sourceRoot, ++lastComponentPosition);
+                        if (componentId) {
+                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
+                        }                                           
+                    }
+
+                    return ts.createCall(
+                        ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
+                        undefined,
+                        [ts.createObjectLiteral(styledConfig)]);
                 }
-                if (ssr) {
-                    const componentId = getIdFromNode(node.parent.parent);
-                    if (componentId) {
-                        styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
-                    }                                           
-                }
-                return ts.createCall(
-                    ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
-                    undefined,
-                    [ts.createObjectLiteral(styledConfig),]);
-                
+
+                ts.forEachChild(node, n => {
+                    if (!n.parent)
+                        n.parent = node;
+                });
+
+                return ts.visitEachChild(node, visitor, context);
             }
 
-            ts.forEachChild(node, n => {
-                if (!n.parent)
-                    n.parent = node;
-            });
-
-            return ts.visitEachChild(node, visitor, context);
-        }
-
-        return (node) => ts.visitNode(node, visitor);
+            return ts.visitNode(node, visitor);
+        };
     };
 
     return transformer;
