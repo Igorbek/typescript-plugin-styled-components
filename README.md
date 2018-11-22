@@ -147,6 +147,9 @@ It allows to optionally pass options that allow to tweak transformer's behavior.
 ```ts
 interface Options {
     getDisplayName(filename: string, bindingName: string | undefined): string | undefined;
+    identifiers: CustomStyledIdentifiers;
+    ssr: boolean;
+    displayName: boolean;
 }
 ```
 
@@ -165,6 +168,53 @@ Sample:
 function getStyledComponentDisplay(filename, bindingName) {
     return bindingName || makePascalCase(filename);
 }
+```
+
+### `ssr`
+
+By adding a unique identifier to every styled component, this plugin avoids checksum mismatches
+due to different class generation on the client and on the server.
+
+This option allows to disable component id generation by setting it to `false`.
+
+Default value is `true` which means that component id is being injected.
+
+### `displayName`
+
+This option enhances the attached CSS class name on each component with richer output
+to help identify your components in the DOM without React DevTools.
+
+It also adds allows you to see the component's `displayName` in React DevTools.
+
+To disable `displayName` generation set this option to `false`
+
+Default value is `true` which means that display name is being injected.
+
+### `identifiers`
+
+This option allows to customize identifiers used by `styled-components` API functions.
+
+> **Warning**. By providing custom identifiers, predefined ones are not added automatically.
+> Make sure you add standard APIs in case you meant to use them.
+
+```ts
+interface CustomStyledIdentifiers {
+    styled: string[];
+    attrs: string[];
+}
+```
+
+- `styled` - list of identifiers of `styled` API (default `['styled'])
+- `attrs` - list of identifiers of `attrs` API (default `['attrs'])
+
+Example
+
+```ts
+const styledComponentsTransformer = createStyledComponentsTransformer({
+    identifiers: {
+        styled: ['styled', 'typedStyled'] // typedStyled is an additional identifier of styled API
+    }
+});
 ```
 
 # Notes
