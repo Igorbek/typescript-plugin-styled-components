@@ -38,7 +38,14 @@
   dependencies:
     "@types/babel-types" "*"
 
-"@types/jest@^19.2.4":
+"@types/jest-specific-snapshot@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@types/jest-specific-snapshot/-/jest-specific-snapshot-0.5.1.tgz#86219a26addd3bfcebc0dc9ae3aea9312de5522b"
+  integrity sha512-NdKS/Zfo2p8UkiAtHUV54SrqTf/7090eJUMmoPdVVAwpTkZsza6RxdWJ4SLs4o1di9PMkVLBXS1hPKWVHaaGOw==
+  dependencies:
+    "@types/jest" "*"
+
+"@types/jest@*", "@types/jest@^19.2.4":
   version "19.2.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-19.2.4.tgz#543651712535962b7dc615e18e4a381fc2687442"
   integrity sha512-w9nmNHHkl9lNeOorjz1a7BLUd6zTa3pakNx2qkKCVtYS44L7taPcJB8l1kQWVOIa7kN08qwlyS11A1nz2yUvWQ==
@@ -1528,7 +1535,7 @@ jest-runtime@^20.0.4:
     strip-bom "3.0.0"
     yargs "^7.0.2"
 
-jest-snapshot@^20.0.3:
+jest-snapshot@>=20.0.3, jest-snapshot@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-20.0.3.tgz#5b847e1adb1a4d90852a7f9f125086e187c76566"
   integrity sha1-W4R+GtsaTZCFKn+fElCG4YfHZWY=
@@ -1539,6 +1546,13 @@ jest-snapshot@^20.0.3:
     jest-util "^20.0.3"
     natural-compare "^1.4.0"
     pretty-format "^20.0.3"
+
+jest-specific-snapshot@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jest-specific-snapshot/-/jest-specific-snapshot-1.0.0.tgz#157c79e2534a6fea820fd475f5d17740c8f90833"
+  integrity sha512-EjCK8Ob8eneeQCdBuO06J1v1C1jklKK7VvCOG/iwQx+8byZ7iCY8+d9M7xlUJiu76ubycXtSkIrPrL+nqjJsjA==
+  dependencies:
+    jest-snapshot ">=20.0.3"
 
 jest-util@^20.0.0, jest-util@^20.0.3:
   version "20.0.3"

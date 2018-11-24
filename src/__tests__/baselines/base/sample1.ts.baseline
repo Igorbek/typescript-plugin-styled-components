@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sample1.ts 1`] = `
+
+File: sample1.ts
+Source code:
+
+  import styled from 'styled-components';
+  
+  const Button = styled.button\`
+    color: red;
+  \`;
+  
+  declare const nonStyled: any;
+  
+  const NonButton = nonStyled.button\`
+    yo
+  \`;
+  
+  const OtherButton = styled(Button)\`
+    color: blue;
+  \`;
+  
+  const SuperButton = Button.extend\`
+    color: super;
+  \`;
+  
+  export default styled.link\`
+    color: black;
+  \`;
+  
+  export const SmallButton = Button.extend\`
+    font-size: .7em;
+  \`;
+  
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' })\`
+    font-size: .1em;
+  \`;
+  
+
+TypeScript before transform:
+
+  import styled from "styled-components";
+  const Button = styled.button \`\\n  color: red;\\n\`;
+  declare const nonStyled: any;
+  const NonButton = nonStyled.button \`\\n  yo\\n\`;
+  const OtherButton = styled(Button) \`\\n  color: blue;\\n\`;
+  const SuperButton = Button.extend \`\\n  color: super;\\n\`;
+  export default styled.link \`\\n  color: black;\\n\`;
+  export const SmallButton = Button.extend \`\\n  font-size: .7em;\\n\`;
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }) \`\\n  font-size: .1em;\\n\`;
+  
+
+TypeScript after transform:
+
+  import styled from 'styled-components';
+  const Button = styled.button.withConfig({ displayName: "Button" }) \`
+    color: red;
+  \`;
+  declare const nonStyled: any;
+  const NonButton = nonStyled.button \`
+    yo
+  \`;
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton" }) \`
+    color: blue;
+  \`;
+  const SuperButton = Button.extend.withConfig({ displayName: "SuperButton" }) \`
+    color: super;
+  \`;
+  export default styled.link \`
+    color: black;
+  \`;
+  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton" }) \`
+    font-size: .7em;
+  \`;
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton" }) \`
+    font-size: .1em;
+  \`;
+  
+
+
+`;

@@ -1,4 +1,5 @@
 import 'jest';
+import { addSerializer } from 'jest-specific-snapshot';
 import * as ts from 'typescript';
 import * as fs from 'fs';
 
@@ -12,7 +13,7 @@ interface TransformBaseline {
     transformed: string;
 }
 
-(expect as any).addSnapshotSerializer({
+const serializer = {
     test: obj => obj && obj.type === 'transform-baseline',
     print: (obj: TransformBaseline, print: (object: any) => string, indent: (str: string) => string) => `
 File: ${obj.filename}
@@ -29,9 +30,11 @@ TypeScript after transform:
 ${indent(obj.transformed)}
 
 `
-});
+};
 
-export function expectTransform(transformer: ts.TransformerFactory<ts.SourceFile>, filename: string, path: string) {
+addSerializer(serializer);
+
+export function expectTransform(transformer: ts.TransformerFactory<ts.SourceFile>, filename: string, path: string, outpath: string) {
     const content = fs.readFileSync(path + '/' + filename).toString();
     const sourceFile = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest);
     const source = printer.printFile(sourceFile);
@@ -46,12 +49,12 @@ export function expectTransform(transformer: ts.TransformerFactory<ts.SourceFile
         transformed
     };
 
-    expect(snapshot).toMatchSnapshot(filename);
+    expect(snapshot).toMatchSpecificSnapshot(outpath + '/' + filename + '.baseline');
 }
 
-export function expectBaselineTransforms(transformer: ts.TransformerFactory<ts.SourceFile>, path: string) {
+export function expectBaselineTransforms(transformer: ts.TransformerFactory<ts.SourceFile>, path: string, outpath: string) {
     const files = fs.readdirSync(path)
         .filter(f => f.toLowerCase().endsWith('.tsx') || f.toLowerCase().endsWith('.ts'));
-    
-    files.forEach(file => it(file, () => expectTransform(transformer, file, path)));
+
+    files.forEach(file => it(file, () => expectTransform(transformer, file, path, outpath)));
 }
