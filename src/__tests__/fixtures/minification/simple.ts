@@ -40,6 +40,10 @@ styled`this is some\ninput with ${placeholder1} and // ignored ${placeholder2}`
 // works with raw escape codes
 styled`this\\nis\\na/* ignore me \\n please */\\ntest`
 styled`this\nis\na/* ignore me \n please */\ntest`
+styled`this
+is
+a/* ignore me \n please *
+ntest`
 
 // removes spaces around symbols
 styled`;  :  {  }  ,  ;  `
