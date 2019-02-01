@@ -5,5 +5,5 @@ const transformer = createTransformer({
     ssr: true
 });
 
-expectBaselineTransforms(transformer, __dirname + '/baselines');
-expectBaselineTransforms(transformer, __dirname + '/ssr-baselines');
+expectBaselineTransforms(transformer, __dirname + '/fixtures/base', 'baselines/ssr');
+expectBaselineTransforms(transformer, __dirname + '/fixtures/ssr', 'baselines/ssr');
