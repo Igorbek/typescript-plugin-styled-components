@@ -128,8 +128,10 @@ export function createTransformer({
             const visitor: ts.Visitor = (node) => {
                 if (
                     node.parent
-                    && isTaggedTemplateExpression(node.parent)
-                    && node.parent.tag === node
+                    && (
+                        isTaggedTemplateExpression(node.parent) && node.parent.tag === node
+                        || isCallExpression(node.parent)
+                    )
                     && node.parent.parent
                     && isVariableDeclaration(node.parent.parent)
                     && isStyledFunction(node, identifiers)
