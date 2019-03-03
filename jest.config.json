@@ -1,10 +1,10 @@
 {
     "automock": false,
     "globals": {
-        "window": {},
-        "__TS_CONFIG__": "./tsconfig.json"
+        "ts-jest": {
+            "tsConfig": "./tsconfig.json"
+        }
     },
-    "mapCoverage": true,
     "moduleFileExtensions": [
         "ts",
         "tsx",
@@ -14,7 +14,7 @@
     "rootDir": "./",
     "testRegex": "\\.test\\.(ts|tsx)$",
     "transform": {
-        "\\.(ts|tsx)$": "ts-jest/preprocessor.js"
+        "\\.(ts|tsx)$": "ts-jest"
     },
     "verbose": true
 }

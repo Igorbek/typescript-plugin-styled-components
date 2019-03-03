@@ -14,7 +14,7 @@ interface TransformBaseline {
 }
 
 const serializer = {
-    test: obj => obj && obj.type === 'transform-baseline',
+    test: (obj: any): obj is TransformBaseline => obj && obj.type === 'transform-baseline',
     print: (obj: TransformBaseline, print: (object: any) => string, indent: (str: string) => string) => `
 File: ${obj.filename}
 Source code:
