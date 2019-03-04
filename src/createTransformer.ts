@@ -61,12 +61,16 @@ function isValidComponent(node: ts.Node) {
     return node && isIdentifier(node) && isValidComponentName(node.text);
 }
 
+function isLetter(ch: string) {
+    return ch.toLowerCase() !== ch.toUpperCase();
+}
+
 function isValidTagName(name: string) {
-    return name[0] === name[0].toLowerCase();
+    return isLetter(name[0]) && name[0] === name[0].toLowerCase();
 }
 
 function isValidComponentName(name: string) {
-    return name[0] === name[0].toUpperCase();
+    return isLetter(name[0]) && (name[0] === name[0].toUpperCase());
 }
 
 function isStyledAttrsIdentifier(name: string, { attrs: attrsIdentifiers = ['attrs'] }: CustomStyledIdentifiers) {
@@ -128,8 +132,10 @@ export function createTransformer({
             const visitor: ts.Visitor = (node) => {
                 if (
                     node.parent
-                    && isTaggedTemplateExpression(node.parent)
-                    && node.parent.tag === node
+                    && (
+                        isTaggedTemplateExpression(node.parent) && node.parent.tag === node
+                        || isCallExpression(node.parent)
+                    )
                     && node.parent.parent
                     && isVariableDeclaration(node.parent.parent)
                     && isStyledFunction(node, identifiers)
