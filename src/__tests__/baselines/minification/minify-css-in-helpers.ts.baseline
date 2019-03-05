@@ -20,6 +20,8 @@ Source code:
     color: \${theColor};
   \`;
   
+  export {};
+  
 
 TypeScript before transform:
 
@@ -28,6 +30,7 @@ TypeScript before transform:
   declare const theColor: any;
   const key = keyframes \`\\n  to {\\n    transform: rotate(360deg);\\n  }\\n\`;
   const color = css \`\\n  color: \${theColor};\\n\`;
+  export {};
   
 
 TypeScript after transform:
@@ -43,6 +46,7 @@ TypeScript after transform:
   const color = css \`
     color: \${theColor};
   \`;
+  export {};
   
 
 

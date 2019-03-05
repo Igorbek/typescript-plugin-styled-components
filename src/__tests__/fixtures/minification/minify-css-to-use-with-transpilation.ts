@@ -22,3 +22,5 @@ const Parens = styled.div`
     color: blue;
   }
 `;
+
+export {};

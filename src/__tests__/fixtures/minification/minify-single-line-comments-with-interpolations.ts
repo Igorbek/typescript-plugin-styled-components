@@ -38,3 +38,14 @@ const Test7 = styled.div`
   ${'green'} // color: ${'red'}${'blue'};
   height: ${p => p.props.height};
 `
+
+const Test8 = styled.dev`
+  color: /* ${'red'} ... disabled */ blue;
+`;
+
+const Test9 = styled.dev`
+  color: // ${'red'} ... disabled
+  blue
+`;
+
+export {}

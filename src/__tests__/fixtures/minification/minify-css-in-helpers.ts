@@ -12,3 +12,5 @@ const key = keyframes`
 const color = css`
   color: ${theColor};
 `;
+
+export {};

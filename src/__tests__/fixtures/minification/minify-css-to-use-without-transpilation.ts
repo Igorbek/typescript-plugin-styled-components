@@ -34,3 +34,5 @@ const UrlComments = styled.div`
   // comment 3
   border: 1px solid green;
 `;
+
+export {};

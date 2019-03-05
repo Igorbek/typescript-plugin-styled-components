@@ -50,3 +50,19 @@ export function isExportAssignment(node: ts.Node): node is ts.ExportAssignment {
 export function isTaggedTemplateExpression(node: ts.Node): node is ts.TaggedTemplateExpression {
     return node.kind === ts.SyntaxKind.TaggedTemplateExpression;
 }
+
+/**
+ * Return true if node is `TemplateExpression`
+ * @param node A TypeScript node
+ */
+export function isTemplateExpression(node: ts.Node): node is ts.TemplateExpression {
+    return node.kind === ts.SyntaxKind.TemplateExpression;
+}
+
+/**
+ * Return true if node is `NoSubstitutionTemplateLiteral`
+ * @param node A TypeScript node
+ */
+export function isNoSubstitutionTemplateLiteral(node: ts.Node): node is ts.NoSubstitutionTemplateLiteral {
+    return node.kind === ts.SyntaxKind.NoSubstitutionTemplateLiteral;
+}

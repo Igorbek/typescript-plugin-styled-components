@@ -30,6 +30,8 @@ export interface Options {
      * @defaultValue `true`
      */
     displayName: boolean;
+
+    minify: boolean;
 }
 
 export interface CustomStyledIdentifiers {

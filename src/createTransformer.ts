@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as ts from 'typescript';
 import {
     isPropertyAccessExpression,
@@ -10,7 +11,7 @@ import {
 
 import { Options, CustomStyledIdentifiers } from './models/Options';
 import { hash } from './hash';
-import * as path from 'path';
+import { minifyTemplate } from './minify';
 
 /** Detects that a node represents a styled function
  * Recognizes the following patterns:
@@ -92,7 +93,8 @@ export function createTransformer({
     getDisplayName = defaultGetDisplayName,
     identifiers = {},
     ssr = true,
-    displayName = true
+    displayName = true,
+    minify = false
 } : Partial<Options> = {}) {
 
     /**
@@ -130,6 +132,19 @@ export function createTransformer({
             let lastComponentPosition = 0;
 
             const visitor: ts.Visitor = (node) => {
+                if (
+                    minify
+                    && isTaggedTemplateExpression(node)
+                    && isStyledFunction(node.tag, identifiers)
+                ) {
+                    const minifiedTemplate = minifyTemplate(node.template);
+                    if (minifiedTemplate && minifiedTemplate !== node.template) {
+                        const newNode = ts.createTaggedTemplate(node.tag, node.typeArguments, minifiedTemplate);
+                        newNode.parent = node.parent;
+                        node = newNode;
+                    }
+                }
+
                 if (
                     node.parent
                     && (
