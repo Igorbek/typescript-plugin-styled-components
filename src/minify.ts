@@ -6,7 +6,7 @@ type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State } | void
 type StateMachine = {
     [K in State]: {
         next?(ch: string): ReducerResult;
-        flush?(): ReducerResult;
+        flush?(last: boolean): ReducerResult;
     }
 };
 
@@ -66,7 +66,8 @@ const stateMachine: StateMachine = {
             if (ch == '\n') return { state: ';', skipEmit: true }
             return { skipEmit: true };
         },
-        flush() {
+        flush(last) {
+            if (last) return { skipEmit: true }
             return { state: '//$', emit: '//' }
         }
     },
@@ -82,7 +83,8 @@ const stateMachine: StateMachine = {
             if (ch == '*') return { state: '/**', skipEmit: true }
             return { skipEmit: true };
         },
-        flush() {
+        flush(last) {
+            if (last) return { skipEmit: true }
             return { state: '/*$', emit: '/*' }
         }
     },
@@ -106,10 +108,10 @@ const stateMachine: StateMachine = {
     }
 };
 
-function createMinifier(): (next: string, middle?: boolean) => string {
+function createMinifier(): (next: string, last?: boolean) => string {
     let state: State = ';';
 
-    return (next, middle = false) => {
+    return (next, last = false) => {
         let minified = '';
 
         function apply(result: ReducerResult, ch?: string) {
@@ -135,7 +137,7 @@ function createMinifier(): (next: string, middle?: boolean) => string {
         }
 
         const reducer = stateMachine[state];
-        apply(reducer.flush && reducer.flush());
+        apply(reducer.flush && reducer.flush(last));
 
         return minified;
     }
@@ -153,16 +155,14 @@ export function minifyTemplate(templateLiteral: ts.TemplateLiteral) {
     const minifier = createMinifier();
 
     if (isNoSubstitutionTemplateLiteral(templateLiteral)) {
-        // const sourceMapRange = ts.getSourceMapRange(templateLiteral);
-        const node = ts.createNoSubstitutionTemplateLiteral(minifier(templateLiteral.text));
-        // ts.setSourceMapRange(node, sourceMapRange);
+        const node = ts.createNoSubstitutionTemplateLiteral(minifier(templateLiteral.text, true));
         return node;
     } else if (isTemplateExpression(templateLiteral)) {
         const head = ts.createTemplateHead(minifier(templateLiteral.head.text));
         const templateSpans = templateLiteral.templateSpans.map(span => ts.createTemplateSpan(span.expression,
             span.literal.kind === ts.SyntaxKind.TemplateMiddle
-                ? ts.createTemplateMiddle(minifier(span.literal.text, true))
-                : ts.createTemplateTail(minifier(span.literal.text))));
+                ? ts.createTemplateMiddle(minifier(span.literal.text))
+                : ts.createTemplateTail(minifier(span.literal.text, true))));
         const node = ts.createTemplateExpression(head, templateSpans);
         return node;
     }
