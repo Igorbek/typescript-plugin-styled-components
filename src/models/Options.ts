@@ -48,4 +48,25 @@ export interface CustomStyledIdentifiers {
      * @defaultValue `['attrs']`
      */
     attrs?: string[];
+
+    /**
+     * Identifiers of `keyframes` function.
+     * 
+     * @defaultValue `['keyframes']`
+     */
+    keyframes?: string[];
+
+    /**
+     * Identifiers of `css` function.
+     * 
+     * @defaultValue `['css']`
+     */
+    css?: string[];
+
+    /**
+     * Identifiers of `createGlobalStyle` function.
+     * 
+     * @defaultValue `['createGlobalStyle']`
+     */
+    createGlobalStyle?: string[];
 }

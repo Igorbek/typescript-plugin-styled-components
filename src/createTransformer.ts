@@ -19,6 +19,7 @@ import { minifyTemplate } from './minify';
  * styled.tag
  * Component.extend
  * styled(Component)
+ * styled('tag')
  * styledFunction.attrs(attributes)
 */
 function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): boolean {
@@ -84,6 +85,30 @@ function isStyledAttrs(node: ts.Node, identifiers: CustomStyledIdentifiers) {
         && isStyledFunction((node as ts.PropertyAccessExpression).expression, identifiers);
 }
 
+function isStyledKeyframesIdentifier(name: string, { keyframes = ['keyframes'] }: CustomStyledIdentifiers) {
+    return keyframes.indexOf(name) >= 0;
+}
+
+function isStyledCssIdentifier(name: string, { css = ['css'] }: CustomStyledIdentifiers) {
+    return css.indexOf(name) >= 0;
+}
+
+function isStyledCreateGlobalStyleIdentifier(name: string, { createGlobalStyle = ['createGlobalStyle'] }: CustomStyledIdentifiers) {
+    return createGlobalStyle.indexOf(name) >= 0;
+}
+
+function isMinifyableStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers) {
+    return isStyledFunction(node, identifiers)
+        || (
+            isIdentifier(node)
+            && (
+                isStyledKeyframesIdentifier(node.text, identifiers)
+                || isStyledCssIdentifier(node.text, identifiers)
+                || isStyledCreateGlobalStyleIdentifier(node.text, identifiers)
+            )
+        );
+}
+
 function defaultGetDisplayName(filename: string, bindingName: string | undefined): string | undefined {
     return bindingName;
 }
@@ -135,7 +160,7 @@ export function createTransformer({
                 if (
                     minify
                     && isTaggedTemplateExpression(node)
-                    && isStyledFunction(node.tag, identifiers)
+                    && isMinifyableStyledFunction(node.tag, identifiers)
                 ) {
                     const minifiedTemplate = minifyTemplate(node.template);
                     if (minifiedTemplate && minifiedTemplate !== node.template) {
