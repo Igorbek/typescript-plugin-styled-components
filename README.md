@@ -218,11 +218,11 @@ interface CustomStyledIdentifiers {
 }
 ```
 
-- `styled` - list of identifiers of `styled` API (default `['styled'])
-- `attrs` - list of identifiers of `attrs` API (default `['attrs'])
-- `keyframes` - list of identifiers of `keyframes` API (default `['keyframes'])
-- `css` - list of identifiers of `css` API (default `['css'])
-- `createGlobalStyle` - list of identifiers of `createGlobalStyle` API (default `['createGlobalStyle'])
+- `styled` - list of identifiers of `styled` API (default `['styled']`)
+- `attrs` - list of identifiers of `attrs` API (default `['attrs']`)
+- `keyframes` - list of identifiers of `keyframes` API (default `['keyframes']`)
+- `css` - list of identifiers of `css` API (default `['css']`)
+- `createGlobalStyle` - list of identifiers of `createGlobalStyle` API (default `['createGlobalStyle']`)
 
 Example
 
