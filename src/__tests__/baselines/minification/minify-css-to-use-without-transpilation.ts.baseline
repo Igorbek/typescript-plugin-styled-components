@@ -65,7 +65,7 @@ TypeScript after transform:
   const SpecialCharacters = styled.div.withConfig({ displayName: "SpecialCharacters" }) \`content:"  \${props => props.text}  ";color:red;\`;
   const Comment = styled.div.withConfig({ displayName: "Comment" }) \`width:100%;color:red;\`;
   const Parens = styled.div.withConfig({ displayName: "Parens" }) \`&:hover{color:blue;}color:red;\`;
-  const UrlComments = styled.div.withConfig({ displayName: "UrlComments" }) \`color:red;background:red;border:1px solid green;\`;
+  const UrlComments = styled.div.withConfig({ displayName: "UrlComments" }) \`color:red; background:red;border:1px solid green;\`;
   export {};
   
 

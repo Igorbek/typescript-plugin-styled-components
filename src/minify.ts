@@ -104,7 +104,7 @@ const stateMachine: StateMachine = {
     },
     '/**': {
         next(ch) {
-            if (ch == '/') return { state: ';', skipEmit: true }
+            if (ch == '/') return { state: ' ', skipEmit: true }
             return { state: '/*', skipEmit: true }
         }
     },
