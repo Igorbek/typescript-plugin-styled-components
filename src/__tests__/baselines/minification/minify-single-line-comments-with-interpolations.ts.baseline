@@ -81,9 +81,9 @@ TypeScript after transform:
   const Test4 = styled.div.withConfig({ displayName: "Test4" }) \`width:100%;//\${'red'}\`;
   const Test5 = styled.div.withConfig({ displayName: "Test5" }) \`width:100%;//\${'red'}\${'blue'}\`;
   const Test6 = styled.div.withConfig({ displayName: "Test6" }) \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
-  const Test7 = styled.div.withConfig({ displayName: "Test7" }) \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}height:\${p => p.props.height};\`;
+  const Test7 = styled.div.withConfig({ displayName: "Test7" }) \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}\\nheight:\${p => p.props.height};\`;
   const Test8 = styled.dev.withConfig({ displayName: "Test8" }) \`color:/*\${'red'}*/blue;\`;
-  const Test9 = styled.dev.withConfig({ displayName: "Test9" }) \`color://\${'red'}blue\`;
+  const Test9 = styled.dev.withConfig({ displayName: "Test9" }) \`color://\${'red'}\\nblue\`;
   export {};
   
 

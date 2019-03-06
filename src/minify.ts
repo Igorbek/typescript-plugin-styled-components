@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
-type State = ';' | 'x' | ' ' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
+type State = ';' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
 type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State } | void;
 type StateMachine = {
     [K in State]: {
@@ -39,6 +39,15 @@ const stateMachine: StateMachine = {
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
             return { state: 'x', emit: ' ' + ch };
+        }
+    },
+    '\n': { // may need new line
+        next(ch) {
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: '\n' + ch }
+            if (ch == ' ' || ch == '\n' || ch == '\r') return { state: '\n', skipEmit: true }
+            if (ch == '/') return { state: '/', emit: '\n' }
+            if (isSymbol(ch)) return { state: ';', emit: '\n' + ch };
+            return { state: 'x', emit: '\n' + ch };
         }
     },
     "'": {
@@ -79,7 +88,7 @@ const stateMachine: StateMachine = {
     '/$': { },
     '//$': {
         next(ch) {
-            if (ch == '\n') return { state: ';', skipEmit: true }
+            if (ch == '\n') return { state: '\n', skipEmit: true }
             return { skipEmit: true };
         }
     },
@@ -145,14 +154,6 @@ function createMinifier(): (next: string, last?: boolean) => string {
         apply(reducer.flush && reducer.flush(last));
 
         return minified;
-    }
-}
-
-function *minifierFn() {
-    let nextResult = '';
-    while (true) {
-        const next = yield nextResult;
-        nextResult = next;
     }
 }
 
