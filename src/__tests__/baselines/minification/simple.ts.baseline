@@ -37,10 +37,11 @@ Source code:
   styled.div\`this\\nis\\na/* ignore me \\n please */\\ntest\`
   
   // removes line comments filling an entire line
-  // \`line one line two\`
-  styled.div\`line one
-  // remove this comment
-  line two\`
+  // \`line one{line:two;}\`
+  styled.div\`line one {
+    // remove this comment
+    line: two;
+  }\`
   
   // removes line comments at the end of lines of code
   // \`valid line with out comments\`
@@ -101,8 +102,8 @@ TypeScript before transform:
   // \`this is a test\`
   styled.div \`this\\nis\\na/* ignore me \\n please */\\ntest\`;
   // removes line comments filling an entire line
-  // \`line one line two\`
-  styled.div \`line one\\n// remove this comment\\nline two\`;
+  // \`line one{line:two;}\`
+  styled.div \`line one {\\n  // remove this comment\\n  line: two;\\n}\`;
   // removes line comments at the end of lines of code
   // \`valid line with out comments\`
   styled.div \`valid line with // a comment\\nout comments\`;
@@ -153,8 +154,8 @@ TypeScript after transform:
   // \`this is a test\`
   styled.div \`this is a test\`;
   // removes line comments filling an entire line
-  // \`line one line two\`
-  styled.div \`line oneline two\`;
+  // \`line one{line:two;}\`
+  styled.div \`line one{line:two;}\`;
   // removes line comments at the end of lines of code
   // \`valid line with out comments\`
   styled.div \`valid line without comments\`;

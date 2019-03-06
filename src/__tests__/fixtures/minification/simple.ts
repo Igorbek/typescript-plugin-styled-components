@@ -30,10 +30,11 @@ styled.div`this is a/* ignore me please */test`
 styled.div`this\nis\na/* ignore me \n please */\ntest`
 
 // removes line comments filling an entire line
-// `line one line two`
-styled.div`line one
-// remove this comment
-line two`
+// `line one{line:two;}`
+styled.div`line one {
+  // remove this comment
+  line: two;
+}`
 
 // removes line comments at the end of lines of code
 // `valid line with out comments`
