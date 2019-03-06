@@ -150,6 +150,7 @@ interface Options {
     identifiers: CustomStyledIdentifiers;
     ssr: boolean;
     displayName: boolean;
+    minify: boolean;
 }
 ```
 
@@ -190,6 +191,16 @@ To disable `displayName` generation set this option to `false`
 
 Default value is `true` which means that display name is being injected.
 
+### `minify`
+
+The option allows to turn on minification of inline styles used in styled components.
+It is similar to [`babel-plugin-styled-components`](https://github.com/styled-components/babel-plugin-styled-components)'s same option.
+The minification is not exactly the same and may produce slightly different results.
+
+:warning: **Warning**: The minification is an experimental feature, please use with care.
+
+Default value is `false` which means the minification is not being performed.
+
 ### `identifiers`
 
 This option allows to customize identifiers used by `styled-components` API functions.
@@ -201,11 +212,17 @@ This option allows to customize identifiers used by `styled-components` API func
 interface CustomStyledIdentifiers {
     styled: string[];
     attrs: string[];
+    keyframes: string[];
+    css: string[];
+    createGlobalStyle: string[];
 }
 ```
 
 - `styled` - list of identifiers of `styled` API (default `['styled'])
 - `attrs` - list of identifiers of `attrs` API (default `['attrs'])
+- `keyframes` - list of identifiers of `keyframes` API (default `['keyframes'])
+- `css` - list of identifiers of `css` API (default `['css'])
+- `createGlobalStyle` - list of identifiers of `createGlobalStyle` API (default `['createGlobalStyle'])
 
 Example
 

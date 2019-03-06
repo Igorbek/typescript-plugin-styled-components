@@ -31,6 +31,13 @@ export interface Options {
      */
     displayName: boolean;
 
+    /**
+     * Allow minifying of inline styles in styled functions.
+     * The minification is an experimental feature, please use with care.
+     *
+     * @defaultValue `false`
+     * @experimental The minification feature is experimental.
+     */
     minify: boolean;
 }
 
