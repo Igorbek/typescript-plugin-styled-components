@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`simple2.ts 1`] = `
+
+File: simple2.ts
+Source code:
+
+  export {}
+  declare const styled: any;
+  
+  // spaces before and after ' " ( )
+  styled.div\`a  b"  c  "  d\` // \`a b"  c  "d\`
+  styled.div\`a  b'  c  '  d\` // \`a b'  c  'd\`
+  styled.div\`a  b(  c  )  d\` // \`a b(  c  )d\`
+  styled.div\`a  b  "  c  "d\` // \`a b "  c  "d\`
+  styled.div\`a  b  '  c  'd\` // \`a b '  c  'd\`
+  styled.div\`a  b  (  c  )d\` // \`a b (  c  )d\`
+  
+
+TypeScript before transform:
+
+  export {};
+  declare const styled: any;
+  // spaces before and after ' " ( )
+  styled.div \`a  b"  c  "  d\`; // \`a b"  c  "d\`
+  styled.div \`a  b'  c  '  d\`; // \`a b'  c  'd\`
+  styled.div \`a  b(  c  )  d\`; // \`a b(  c  )d\`
+  styled.div \`a  b  "  c  "d\`; // \`a b "  c  "d\`
+  styled.div \`a  b  '  c  'd\`; // \`a b '  c  'd\`
+  styled.div \`a  b  (  c  )d\`; // \`a b (  c  )d\`
+  
+
+TypeScript after transform:
+
+  export {};
+  declare const styled: any;
+  // spaces before and after ' " ( )
+  styled.div \`a b"  c  "d\`; // \`a b"  c  "d\`
+  styled.div \`a b'  c  'd\`; // \`a b'  c  'd\`
+  styled.div \`a b(  c  )d\`; // \`a b(  c  )d\`
+  styled.div \`a b "  c  "d\`; // \`a b "  c  "d\`
+  styled.div \`a b '  c  'd\`; // \`a b '  c  'd\`
+  styled.div \`a b (  c  )d\`; // \`a b (  c  )d\`
+  
+
+
+`;

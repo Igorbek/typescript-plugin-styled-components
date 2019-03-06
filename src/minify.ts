@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
-type State = ';' | 'x' | ' ' | '"' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
+type State = ';' | 'x' | ' ' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
 type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State } | void;
 type StateMachine = {
     [K in State]: {
@@ -11,13 +11,13 @@ type StateMachine = {
 };
 
 function isSymbol(ch: string) {
-    return ch == ';' || ch == ':' || ch == '{' || ch == '}';
+    return ch == ';' || ch == ':' || ch == '{' || ch == '}' || ch == ',';
 }
 
 const stateMachine: StateMachine = {
     ';': {
         next(ch) {
-            if (ch == '\'' || ch == '"') return { state: ch }
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return;
@@ -26,7 +26,7 @@ const stateMachine: StateMachine = {
     },
     'x': {
         next(ch) {
-            if (ch == '\'' || ch == '"') return { state: ch }
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
@@ -34,7 +34,7 @@ const stateMachine: StateMachine = {
     },
     ' ': { // may need space
         next(ch) {
-            if (ch == '\'' || ch == '"') return { state: ch }
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: ' ' + ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
@@ -49,6 +49,11 @@ const stateMachine: StateMachine = {
     '"': {
         next(ch) {
             if (ch == '"') return { state: ';' };
+        }
+    },
+    '(': {
+        next(ch) {
+            if (ch == ')') return { state: ';' };   // maybe return ' '? then it'd always add space after
         }
     },
     '/': {

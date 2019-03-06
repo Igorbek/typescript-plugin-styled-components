@@ -142,7 +142,7 @@ TypeScript after transform:
   styled.div \`abc def"//"\`;
   // ignores comment markers that are inside parantheses
   // \`bla (//) bla\`
-  styled.div \`bla (\`;
+  styled.div \`bla (//)bla\`;
   // ignores even unescaped URLs
   // \`https://test.com\`
   styled.div \`https:\`;
