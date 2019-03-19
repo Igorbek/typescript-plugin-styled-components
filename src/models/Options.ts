@@ -30,6 +30,15 @@ export interface Options {
      * @defaultValue `true`
      */
     displayName: boolean;
+
+    /**
+     * Allow minifying of inline styles in styled functions.
+     * The minification is an experimental feature, please use with care.
+     *
+     * @defaultValue `false`
+     * @experimental The minification feature is experimental.
+     */
+    minify: boolean;
 }
 
 export interface CustomStyledIdentifiers {
@@ -46,4 +55,25 @@ export interface CustomStyledIdentifiers {
      * @defaultValue `['attrs']`
      */
     attrs?: string[];
+
+    /**
+     * Identifiers of `keyframes` function.
+     * 
+     * @defaultValue `['keyframes']`
+     */
+    keyframes?: string[];
+
+    /**
+     * Identifiers of `css` function.
+     * 
+     * @defaultValue `['css']`
+     */
+    css?: string[];
+
+    /**
+     * Identifiers of `createGlobalStyle` function.
+     * 
+     * @defaultValue `['createGlobalStyle']`
+     */
+    createGlobalStyle?: string[];
 }

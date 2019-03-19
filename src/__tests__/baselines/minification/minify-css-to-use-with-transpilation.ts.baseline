@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`minify-css-to-use-with-transpilation.ts 1`] = `
+
+File: minify-css-to-use-with-transpilation.ts
+Source code:
+
+  declare const styled: any;
+  
+  const Simple = styled.div\`
+    width: 100%;
+  \`;
+  
+  const Interpolation = styled.div\`
+    content: "  \${props => props.text}  ";
+  \`;
+  
+  const SpecialCharacters = styled.div\`
+    content: "  \${props => props.text}  ";\\n color: red;
+  \`;
+  
+  const Comment = styled.div\`
+    // comment
+    color: red;
+  \`
+  
+  const Parens = styled.div\`
+    &:hover {
+      color: blue;
+    }
+  \`;
+  
+  export {};
+  
+
+TypeScript before transform:
+
+  declare const styled: any;
+  const Simple = styled.div \`\\n  width: 100%;\\n\`;
+  const Interpolation = styled.div \`\\n  content: "  \${props => props.text}  ";\\n\`;
+  const SpecialCharacters = styled.div \`\\n  content: "  \${props => props.text}  ";\\n color: red;\\n\`;
+  const Comment = styled.div \`\\n  // comment\\n  color: red;\\n\`;
+  const Parens = styled.div \`\\n  &:hover {\\n    color: blue;\\n  }\\n\`;
+  export {};
+  
+
+TypeScript after transform:
+
+  declare const styled: any;
+  const Simple = styled.div.withConfig({ displayName: "Simple" }) \`width:100%;\`;
+  const Interpolation = styled.div.withConfig({ displayName: "Interpolation" }) \`content:"  \${props => props.text}  ";\`;
+  const SpecialCharacters = styled.div.withConfig({ displayName: "SpecialCharacters" }) \`content:"  \${props => props.text}  ";color:red;\`;
+  const Comment = styled.div.withConfig({ displayName: "Comment" }) \`color:red;\`;
+  const Parens = styled.div.withConfig({ displayName: "Parens" }) \`&:hover{color:blue;}\`;
+  export {};
+  
+
+
+`;

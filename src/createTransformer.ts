@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as ts from 'typescript';
 import {
     isPropertyAccessExpression,
@@ -10,7 +11,7 @@ import {
 
 import { Options, CustomStyledIdentifiers } from './models/Options';
 import { hash } from './hash';
-import * as path from 'path';
+import { minifyTemplate } from './minify';
 
 /** Detects that a node represents a styled function
  * Recognizes the following patterns:
@@ -18,6 +19,7 @@ import * as path from 'path';
  * styled.tag
  * Component.extend
  * styled(Component)
+ * styled('tag')
  * styledFunction.attrs(attributes)
 */
 function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): boolean {
@@ -83,6 +85,30 @@ function isStyledAttrs(node: ts.Node, identifiers: CustomStyledIdentifiers) {
         && isStyledFunction((node as ts.PropertyAccessExpression).expression, identifiers);
 }
 
+function isStyledKeyframesIdentifier(name: string, { keyframes = ['keyframes'] }: CustomStyledIdentifiers) {
+    return keyframes.indexOf(name) >= 0;
+}
+
+function isStyledCssIdentifier(name: string, { css = ['css'] }: CustomStyledIdentifiers) {
+    return css.indexOf(name) >= 0;
+}
+
+function isStyledCreateGlobalStyleIdentifier(name: string, { createGlobalStyle = ['createGlobalStyle'] }: CustomStyledIdentifiers) {
+    return createGlobalStyle.indexOf(name) >= 0;
+}
+
+function isMinifyableStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers) {
+    return isStyledFunction(node, identifiers)
+        || (
+            isIdentifier(node)
+            && (
+                isStyledKeyframesIdentifier(node.text, identifiers)
+                || isStyledCssIdentifier(node.text, identifiers)
+                || isStyledCreateGlobalStyleIdentifier(node.text, identifiers)
+            )
+        );
+}
+
 function defaultGetDisplayName(filename: string, bindingName: string | undefined): string | undefined {
     return bindingName;
 }
@@ -92,7 +118,8 @@ export function createTransformer({
     getDisplayName = defaultGetDisplayName,
     identifiers = {},
     ssr = true,
-    displayName = true
+    displayName = true,
+    minify = false
 } : Partial<Options> = {}) {
 
     /**
@@ -130,6 +157,19 @@ export function createTransformer({
             let lastComponentPosition = 0;
 
             const visitor: ts.Visitor = (node) => {
+                if (
+                    minify
+                    && isTaggedTemplateExpression(node)
+                    && isMinifyableStyledFunction(node.tag, identifiers)
+                ) {
+                    const minifiedTemplate = minifyTemplate(node.template);
+                    if (minifiedTemplate && minifiedTemplate !== node.template) {
+                        const newNode = ts.createTaggedTemplate(node.tag, node.typeArguments, minifiedTemplate);
+                        newNode.parent = node.parent;
+                        node = newNode;
+                    }
+                }
+
                 if (
                     node.parent
                     && (
