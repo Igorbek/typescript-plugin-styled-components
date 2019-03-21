@@ -75,15 +75,15 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  const Test1 = styled.div.withConfig({}) \`width:100%;//\${'red'}\`;
-  const Test2 = styled.div.withConfig({}) \`width:100%;//\${'red'}\`;
-  const Test3 = styled.div.withConfig({}) \`width:100%;\${'red'};\`;
-  const Test4 = styled.div.withConfig({}) \`width:100%;//\${'red'}\`;
-  const Test5 = styled.div.withConfig({}) \`width:100%;//\${'red'}\${'blue'}\`;
-  const Test6 = styled.div.withConfig({}) \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
-  const Test7 = styled.div.withConfig({}) \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}\\nheight:\${p => p.props.height};\`;
-  const Test8 = styled.dev.withConfig({}) \`color:/*\${'red'}*/blue;\`;
-  const Test9 = styled.dev.withConfig({}) \`color://\${'red'}\\nblue\`;
+  const Test1 = styled.div \`width:100%;//\${'red'}\`;
+  const Test2 = styled.div \`width:100%;//\${'red'}\`;
+  const Test3 = styled.div \`width:100%;\${'red'};\`;
+  const Test4 = styled.div \`width:100%;//\${'red'}\`;
+  const Test5 = styled.div \`width:100%;//\${'red'}\${'blue'}\`;
+  const Test6 = styled.div \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
+  const Test7 = styled.div \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}\\nheight:\${p => p.props.height};\`;
+  const Test8 = styled.dev \`color:/*\${'red'}*/blue;\`;
+  const Test9 = styled.dev \`color://\${'red'}\\nblue\`;
   export {};
   
 

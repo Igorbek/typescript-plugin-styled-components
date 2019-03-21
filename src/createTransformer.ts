@@ -197,10 +197,12 @@ export function createTransformer({
                         }                                           
                     }
 
-                    return ts.createCall(
-                        ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
-                        undefined,
-                        [ts.createObjectLiteral(styledConfig)]);
+                    if (styledConfig.length > 0) {
+                        return ts.createCall(
+                            ts.createPropertyAccess(node as ts.Expression, 'withConfig'),
+                            undefined,
+                            [ts.createObjectLiteral(styledConfig)]);
+                    }
                 }
 
                 ts.forEachChild(node, n => {

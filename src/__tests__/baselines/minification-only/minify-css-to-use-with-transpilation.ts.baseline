@@ -47,11 +47,11 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  const Simple = styled.div.withConfig({}) \`width:100%;\`;
-  const Interpolation = styled.div.withConfig({}) \`content:"  \${props => props.text}  ";\`;
-  const SpecialCharacters = styled.div.withConfig({}) \`content:"  \${props => props.text}  ";color:red;\`;
-  const Comment = styled.div.withConfig({}) \`color:red;\`;
-  const Parens = styled.div.withConfig({}) \`&:hover{color:blue;}\`;
+  const Simple = styled.div \`width:100%;\`;
+  const Interpolation = styled.div \`content:"  \${props => props.text}  ";\`;
+  const SpecialCharacters = styled.div \`content:"  \${props => props.text}  ";color:red;\`;
+  const Comment = styled.div \`color:red;\`;
+  const Parens = styled.div \`&:hover{color:blue;}\`;
   export {};
   
 
