@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`issue36-extended.ts 1`] = `
+
+File: issue36-extended.ts
+Source code:
+
+  declare const styled: any;
+  
+  export const A = styled.div\`
+    border: \${'solid'} 10px;
+  \`
+  
+
+TypeScript before transform:
+
+  declare const styled: any;
+  export const A = styled.div \`\\n  border: \${"solid"} 10px;\\n\`;
+  
+
+TypeScript after transform:
+
+  declare const styled: any;
+  export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'}10px;\`;
+  
+
+
+`;
