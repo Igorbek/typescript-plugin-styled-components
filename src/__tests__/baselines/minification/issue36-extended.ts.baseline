@@ -11,17 +11,35 @@ Source code:
     border: \${'solid'} 10px;
   \`
   
+  styled.div\`
+    border: \${'solid'}// comment here
+  10px;
+    border: solid// comment here
+  10px;
+  \`
+  
+  styled.div\`
+    border: \${'solid'}/* comment here
+  */10px;
+    border: \${'solid'}/* comment here
+  */ 10px;
+  \`
+  
 
 TypeScript before transform:
 
   declare const styled: any;
   export const A = styled.div \`\\n  border: \${"solid"} 10px;\\n\`;
+  styled.div \`\\n  border: \${"solid"}// comment here\\n10px;\\n  border: solid// comment here\\n10px;\\n\`;
+  styled.div \`\\n  border: \${"solid"}/* comment here\\n*/10px;\\n  border: \${"solid"}/* comment here\\n*/ 10px;\\n\`;
   
 
 TypeScript after transform:
 
   declare const styled: any;
   export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'} 10px;\`;
+  styled.div \`border:\${'solid'}10px;border:solid10px;\`;
+  styled.div \`border:\${'solid'} 10px;border:\${'solid'} 10px;\`;
   
 
 
