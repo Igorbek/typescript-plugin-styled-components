@@ -1,8 +1,8 @@
 import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
-type State = ';' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
-type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State } | void;
+type State = ';' | ';$' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | ';/' | ';//' | '/$' | '//$' | '/*' | '/**' | ';/*' | ';/**' | '/*$' | '/*$*';
+type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State; } | void;
 type StateMachine = {
     [K in State]: {
         next?(ch: string): ReducerResult;
@@ -19,6 +19,18 @@ const stateMachine: StateMachine = {
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true }
+            if (ch == '/') return { state: ';/', skipEmit: true }
+            if (isSymbol(ch)) return;
+            return { state: 'x' }
+        },
+        flush() {
+            return { state: ';$' }
+        }
+    },
+    ';$': { // after placeholder
+        next(ch) {
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
+            if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true, state: ' ' } // we may need a space
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return;
             return { state: 'x' }
@@ -77,6 +89,26 @@ const stateMachine: StateMachine = {
     },
     '//': {
         next(ch) {
+            if (ch == '\n') return { state: ' ', skipEmit: true }
+            return { skipEmit: true };
+        },
+        flush(last) {
+            if (last) return { skipEmit: true }
+            return { state: '//$', emit: '//' }
+        }
+    },
+    ';/': {
+        next(ch) {
+            if (ch == '/') return { state: ';//', skipEmit: true }
+            if (ch == '*') return { state: ';/*', skipEmit: true }
+            return { state: ';', emit: '/' + ch }
+        },
+        flush() {
+            return { state: '/$', emit: '/' }
+        }
+    },
+    ';//': {
+        next(ch) {
             if (ch == '\n') return { state: ';', skipEmit: true }
             return { skipEmit: true };
         },
@@ -106,6 +138,22 @@ const stateMachine: StateMachine = {
         next(ch) {
             if (ch == '/') return { state: ' ', skipEmit: true }
             return { state: '/*', skipEmit: true }
+        }
+    },
+    ';/*': {
+        next(ch) {
+            if (ch == '*') return { state: ';/**', skipEmit: true }
+            return { skipEmit: true };
+        },
+        flush(last) {
+            if (last) return { skipEmit: true }
+            return { state: '/*$', emit: '/*' }
+        }
+    },
+    ';/**': {
+        next(ch) {
+            if (ch == '/') return { state: ';', skipEmit: true }
+            return { state: ';/*', skipEmit: true }
         }
     },
     '/*$': {
@@ -141,7 +189,7 @@ function createMinifier(): (next: string, last?: boolean) => string {
                     minified += ch;
             }
         }
-    
+
         let pos = 0;
         let len = next.length;
         while (pos < len) {
