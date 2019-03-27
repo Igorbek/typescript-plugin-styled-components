@@ -21,7 +21,7 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'}10px;\`;
+  export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'} 10px;\`;
   
 
 

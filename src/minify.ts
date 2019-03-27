@@ -1,12 +1,13 @@
 import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
-type State = ';' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
+type State = ';' | ';$' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | '/$' | '//$' | '/*' | '/**' | '/*$' | '/*$*';
 type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State } | void;
 type StateMachine = {
     [K in State]: {
         next?(ch: string): ReducerResult;
         flush?(last: boolean): ReducerResult;
+        placeholder?(): ReducerResult;
     }
 };
 
@@ -19,6 +20,18 @@ const stateMachine: StateMachine = {
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true }
+            if (ch == '/') return { state: '/', skipEmit: true }
+            if (isSymbol(ch)) return;
+            return { state: 'x' }
+        },
+        flush() {
+            return { state: ';$' }
+        }
+    },
+    ';$': { // after placeholder
+        next(ch) {
+            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
+            if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true, state: ' ' } // we may need a space
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return;
             return { state: 'x' }
@@ -141,16 +154,19 @@ function createMinifier(): (next: string, last?: boolean) => string {
                     minified += ch;
             }
         }
+
+        let reducer = stateMachine[state];
+        apply(reducer.placeholder && reducer.placeholder());
     
         let pos = 0;
         let len = next.length;
         while (pos < len) {
             const ch = next[pos++];
-            const reducer = stateMachine[state];
+            reducer = stateMachine[state];
             apply(reducer.next && reducer.next(ch), ch)
         }
 
-        const reducer = stateMachine[state];
+        reducer = stateMachine[state];
         apply(reducer.flush && reducer.flush(last));
 
         return minified;
