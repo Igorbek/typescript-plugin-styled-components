@@ -32,7 +32,7 @@ const stateMachine: StateMachine = {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
             if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true, state: ' ' } // we may need a space
             if (ch == '/') return { state: '/', skipEmit: true }
-            if (isSymbol(ch)) return;
+            if (isSymbol(ch)) return { state: ';' };
             return { state: 'x' }
         }
     },
@@ -51,6 +51,9 @@ const stateMachine: StateMachine = {
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
             return { state: 'x', emit: ' ' + ch };
+        },
+        flush(last) {
+            if (!last) return { emit: ' ' };
         }
     },
     '\n': { // may need new line
@@ -170,7 +173,7 @@ const stateMachine: StateMachine = {
     }
 };
 
-function createMinifier(): (next: string, last?: boolean) => string {
+export function createMinifier(): (next: string, last?: boolean) => string {
     let state: State = ';';
 
     return (next, last = false) => {
@@ -195,11 +198,17 @@ function createMinifier(): (next: string, last?: boolean) => string {
         while (pos < len) {
             const ch = next[pos++];
             const reducer = stateMachine[state];
-            apply(reducer.next && reducer.next(ch), ch)
+            const prevState = state;
+            const reducerResult = reducer.next && reducer.next(ch);
+            apply(reducerResult, ch)
+            //console.log('next(', { ch, state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
         }
 
         const reducer = stateMachine[state];
-        apply(reducer.flush && reducer.flush(last));
+        const prevState = state;
+        const reducerResult = reducer.flush && reducer.flush(last);
+        apply(reducerResult);
+        //console.log('flush', { state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
 
         return minified;
     }

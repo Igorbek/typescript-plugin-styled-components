@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`issue40.ts 1`] = `
+
+File: issue40.ts
+Source code:
+
+  declare const styled: any;
+  
+  styled.div\`padding: 0 0 13px \${'50px'};\`
+  
+
+TypeScript before transform:
+
+  declare const styled: any;
+  styled.div \`padding: 0 0 13px \${"50px"};\`;
+  
+
+TypeScript after transform:
+
+  declare const styled: any;
+  styled.div \`padding:0 0 13px \${'50px'};\`;
+  
+
+
+`;

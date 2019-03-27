@@ -164,7 +164,7 @@ TypeScript after transform:
   styled.div \`this is a test\`;
   // returns the indices of removed placeholders (expressions)
   // \`this is some input with \${placeholder1} and //\${placeholder2}\`
-  styled.div \`this is some input with\${placeholder1} and//\${placeholder2}\`;
+  styled.div \`this is some input with \${placeholder1} and//\${placeholder2}\`;
   // works with raw escape codes
   // \`this\\\\nis\\\\na \\\\ntest\`
   styled.div \`this\\\\nis\\\\na \\\\ntest\`;
