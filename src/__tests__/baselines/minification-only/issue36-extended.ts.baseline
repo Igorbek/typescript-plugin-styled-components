@@ -38,7 +38,7 @@ TypeScript after transform:
 
   declare const styled: any;
   export const A = styled.div \`border:\${'solid'} 10px;\`;
-  styled.div \`border:\${'solid'}10px;border:solid10px;\`;
+  styled.div \`border:\${'solid'} 10px;border:solid 10px;\`;
   styled.div \`border:\${'solid'} 10px;border:\${'solid'} 10px;\`;
   
 
