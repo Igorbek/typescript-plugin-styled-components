@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`issue44.tsx 1`] = `
+
+File: issue44.tsx
+Source code:
+
+  declare const styled: any;
+  styled.div\` transition:  width \${100}ms  ease-in;\`;
+  styled.div\` transition:  width \${'100ms'}  ease-in;\`;
+  
+
+TypeScript before transform:
+
+  declare const styled: any;
+  styled.div \` transition:  width \${100}ms  ease-in;\`;
+  styled.div \` transition:  width \${"100ms"}  ease-in;\`;
+  
+
+TypeScript after transform:
+
+  declare const styled: any;
+  styled.div \`transition:width \${100}ms ease-in;\`;
+  styled.div \`transition:width \${'100ms'} ease-in;\`;
+  
+
+
+`;

@@ -53,7 +53,7 @@ const stateMachine: StateMachine = {
             return { state: 'x', emit: ' ' + ch };
         },
         flush(last) {
-            if (!last) return { emit: ' ' };
+            if (!last) return { emit: ' ', state: ';$' };
         }
     },
     '\n': { // may need new line
@@ -201,14 +201,14 @@ export function createMinifier(): (next: string, last?: boolean) => string {
             const prevState = state;
             const reducerResult = reducer.next && reducer.next(ch);
             apply(reducerResult, ch)
-            //console.log('next(', { ch, state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
+            // console.log('next(', { ch, state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
         }
 
         const reducer = stateMachine[state];
         const prevState = state;
         const reducerResult = reducer.flush && reducer.flush(last);
         apply(reducerResult);
-        //console.log('flush', { state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
+        // console.log('flush', { state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
 
         return minified;
     }
