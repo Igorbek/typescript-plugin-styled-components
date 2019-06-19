@@ -152,7 +152,7 @@ For that reason there are other tools created that do support pluggable transfor
 The [`ttypescript` compiler](https://github.com/cevek/ttypescript) is a CLI tool that allows to use TypeScript compiler with pluggable transformers.
 To use the transformer with that tool you can configure it by updating `tsconfig.json` the following way:
 
-```json
+```js
 {
     "compilerOptions": {
         "plugins": [
