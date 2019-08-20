@@ -17,24 +17,13 @@ import { minifyTemplate } from './minify';
  * Recognizes the following patterns:
  *
  * styled.tag
- * Component.extend
  * styled(Component)
  * styled('tag')
  * styledFunction.attrs(attributes)
 */
 function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): boolean {
     if (isPropertyAccessExpression(node)) {
-        if (isStyledObject(node.expression, identifiers)) {
-            return true;
-        }
-
-        if (node.name.text === 'extend'
-            && isValidComponent(node.expression)) {
-
-            return true;
-        }
-
-        return false;
+        return isStyledObject(node.expression, identifiers)
     }
 
     if (isCallExpression(node) && node.arguments.length === 1) {
