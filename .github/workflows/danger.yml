@@ -1,0 +1,16 @@
+name: Danger
+
+on: [push]
+
+jobs:
+  danger:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Danger JS Action
+      uses: danger/danger-js@9.1.8
+      args: "--dangerfile .github/workflows/js/dangerfile.ts"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
