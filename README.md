@@ -14,6 +14,18 @@ The following command adds the packages to the project as a development-time dep
 
 <pre><code><strong>yarn</strong> add <em>typescript-plugin-styled-components</em> --dev</code></pre>
 
+# Documentation
+
+- [Integration with `Webpack`](#Integration-with-Webpack)
+  - [`awesome-typescript-loader`](#awesome-typescript-loader)
+  - [`ts-loader`](#ts-loader)
+  - [Forked process configuration](#Forked-process-configuration)
+- [TypeScript compiler (CLI)](#TypeScript-compiler-CLI)
+- [`ttypescript` compiler](#ttypescript-compiler)
+- [API](#API)
+  - [`createTransformer`](#createTransformer)
+  - [`Options`](#Options)
+- [Notes](#Notes)
 
 # Integration with `Webpack`
 
@@ -127,6 +139,33 @@ options: {
     ... // other loader's options
 -    getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
 +    getCustomTransformers: path.join(__dirname, './webpack.ts-transformers.js')
+}
+```
+
+# TypeScript compiler (CLI)
+
+TypeScript command line compiler tool (`tcs`) does not support using of pluggable modules and transformers.
+For that reason there are other tools created that do support pluggable transformers. See [`ttypescript` compiler](#ttypescript-compiler) section.
+
+# `ttypescript` compiler
+
+The [`ttypescript` compiler](https://github.com/cevek/ttypescript) is a CLI tool that allows to use TypeScript compiler with pluggable transformers.
+To use the transformer with that tool you can configure it by updating `tsconfig.json` the following way:
+
+```js
+{
+    "compilerOptions": {
+        "plugins": [
+            {
+                "transform": "typescript-plugin-styled-components",
+                "type": "config",
+
+                // other typescript-plugin-styled-components options can be added here
+                "minify": true,
+                "ssr": true
+            }
+        ]
+    }
 }
 ```
 
