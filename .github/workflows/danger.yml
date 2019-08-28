@@ -21,4 +21,4 @@ jobs:
     - name: Danger
       run: yarn danger ci --dangerfile ./.github/workflows/js/dangerfile.ts
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
