@@ -19,6 +19,6 @@ jobs:
       run: |
         yarn install  --frozen-lockfile
     - name: Danger
-      run: yarn danger ci --dangerfile ./.github/workflows/js/dangerfile.ts
+      run: DEBUG="*" yarn danger ci --dangerfile ./.github/workflows/js/dangerfile.ts
       env:
         GITHUB_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
