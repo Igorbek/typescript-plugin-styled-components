@@ -23,3 +23,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
+        DANGER_JS_APP_INSTALL_ID: ${{ secrets.DANGER_JS_APP_INSTALL_ID }}
