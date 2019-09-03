@@ -4,8 +4,13 @@ import { danger, fail } from 'danger';
 
 export default async () => {
   if (danger.github.pr) {
-    console.log('PR exists', danger.github.pr.html_url);
-    fail('This dangerfile is not ready yet.');
+    const match = danger.git.fileMatch('dangerfile');
+    if (match.edited) {
+      const file = match.getKeyedPaths().edited[0]
+      fail('This dangerfile is not ready yet.', file);
+    }
+    else
+      fail('This dangerfile is not ready yet. Location is unknown.');
   } else {
     fail('PR does not exist');
   }
