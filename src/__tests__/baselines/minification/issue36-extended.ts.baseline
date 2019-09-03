@@ -29,9 +29,21 @@ Source code:
 TypeScript before transform:
 
   declare const styled: any;
-  export const A = styled.div \`\\n  border: \${"solid"} 10px;\\n\`;
-  styled.div \`\\n  border: \${"solid"}// comment here\\n10px;\\n  border: solid// comment here\\n10px;\\n\`;
-  styled.div \`\\n  border: \${"solid"}/* comment here\\n*/10px;\\n  border: \${"solid"}/* comment here\\n*/ 10px;\\n\`;
+  export const A = styled.div \`
+    border: \${"solid"} 10px;
+  \`;
+  styled.div \`
+    border: \${"solid"}// comment here
+  10px;
+    border: solid// comment here
+  10px;
+  \`;
+  styled.div \`
+    border: \${"solid"}/* comment here
+  */10px;
+    border: \${"solid"}/* comment here
+  */ 10px;
+  \`;
   
 
 TypeScript after transform:

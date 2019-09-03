@@ -38,9 +38,21 @@ TypeScript before transform:
   declare const css: any;
   declare const createGlobalStyle: any;
   declare const theColor: any;
-  const key = keyframes \`\\n  to {\\n    transform: rotate(360deg);\\n  }\\n\`;
-  const color = css \`\\n  color: \${theColor};\\n\`;
-  const MyRedBody = createGlobalStyle \`\\n  body {\\n    background-color: red; // comments\\n    \${color} // comments\\n    // it will be ignored, but still emitted \${color}\\n  }\\n\`;
+  const key = keyframes \`
+    to {
+      transform: rotate(360deg);
+    }
+  \`;
+  const color = css \`
+    color: \${theColor};
+  \`;
+  const MyRedBody = createGlobalStyle \`
+    body {
+      background-color: red; // comments
+      \${color} // comments
+      // it will be ignored, but still emitted \${color}
+    }
+  \`;
   export {};
   
 
@@ -52,7 +64,8 @@ TypeScript after transform:
   declare const theColor: any;
   const key = keyframes \`to{transform:rotate(360deg);}\`;
   const color = css \`color:\${theColor};\`;
-  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}\\n}\`;
+  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}
+  }\`;
   export {};
   
 
