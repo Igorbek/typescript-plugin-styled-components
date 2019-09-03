@@ -12,6 +12,6 @@ jobs:
     - name: Danger
       uses: danger/danger-js@9.1.6
       with:
-        args: '--use-github-checks --dangerfile ./.github/workflows/js/dangerfile.ts'
+        args: '--dangerfile ./.github/workflows/js/dangerfile.ts'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
