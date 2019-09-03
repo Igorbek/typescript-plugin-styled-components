@@ -60,15 +60,45 @@ Source code:
 TypeScript before transform:
 
   declare const styled: any;
-  const Test1 = styled.div \`\\n  width: 100%;\\n  // color: \${"red"};\\n\`;
-  const Test2 = styled.div \`\\n  width: 100%;\\n  // color: pale\${"red"};\\n\`;
-  const Test3 = styled.div \`\\n  width: 100%;\\n  // color\\n  \${"red"};\\n\`;
-  const Test4 = styled.div \`\\n  width: 100%;\\n  // color: \${"red"}-blue;\\n\`;
-  const Test5 = styled.div \`\\n  width: 100%;\\n  // color: \${"red"}\${"blue"};\\n\`;
-  const Test6 = styled.div \`\\n  background: url("https://google.com");\\n  width: 100%;\\n  \${"green"} // color: \${"red"}\${"blue"};\\n\`;
-  const Test7 = styled.div \`\\n  background: url("https://google.com");\\n  width: \${p => p.props.width};\\n  \${"green"} // color: \${"red"}\${"blue"};\\n  height: \${p => p.props.height};\\n\`;
-  const Test8 = styled.dev \`\\n  color: /* \${"red"} ... disabled */ blue;\\n\`;
-  const Test9 = styled.dev \`\\n  color: // \${"red"} ... disabled\\n  blue\\n\`;
+  const Test1 = styled.div \`
+    width: 100%;
+    // color: \${"red"};
+  \`;
+  const Test2 = styled.div \`
+    width: 100%;
+    // color: pale\${"red"};
+  \`;
+  const Test3 = styled.div \`
+    width: 100%;
+    // color
+    \${"red"};
+  \`;
+  const Test4 = styled.div \`
+    width: 100%;
+    // color: \${"red"}-blue;
+  \`;
+  const Test5 = styled.div \`
+    width: 100%;
+    // color: \${"red"}\${"blue"};
+  \`;
+  const Test6 = styled.div \`
+    background: url("https://google.com");
+    width: 100%;
+    \${"green"} // color: \${"red"}\${"blue"};
+  \`;
+  const Test7 = styled.div \`
+    background: url("https://google.com");
+    width: \${p => p.props.width};
+    \${"green"} // color: \${"red"}\${"blue"};
+    height: \${p => p.props.height};
+  \`;
+  const Test8 = styled.dev \`
+    color: /* \${"red"} ... disabled */ blue;
+  \`;
+  const Test9 = styled.dev \`
+    color: // \${"red"} ... disabled
+    blue
+  \`;
   export {};
   
 
@@ -81,9 +111,11 @@ TypeScript after transform:
   const Test4 = styled.div \`width:100%;//\${'red'}\`;
   const Test5 = styled.div \`width:100%;//\${'red'}\${'blue'}\`;
   const Test6 = styled.div \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
-  const Test7 = styled.div \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}\\nheight:\${p => p.props.height};\`;
+  const Test7 = styled.div \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}
+  height:\${p => p.props.height};\`;
   const Test8 = styled.dev \`color:/*\${'red'}*/blue;\`;
-  const Test9 = styled.dev \`color://\${'red'}\\nblue\`;
+  const Test9 = styled.dev \`color://\${'red'}
+  blue\`;
   export {};
   
 
