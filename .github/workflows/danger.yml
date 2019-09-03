@@ -1,6 +1,6 @@
 name: Danger
 
-on: [push]
+on: [pull_request]
 
 jobs:
   danger:
@@ -9,18 +9,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js 10.x
-      uses: actions/setup-node@v1
-      with:
-        version: 12.x
-    - name: install yarn
-      run: npm install -g yarn
-    - name: yarn install
-      run: |
-        yarn install  --frozen-lockfile
     - name: Danger
-      run: DEBUG="*" yarn danger ci --use-github-checks --dangerfile ./.github/workflows/js/dangerfile.ts
+      uses: danger/danger-js@9.1.6
+      args: '--use-github-checks --dangerfile ./.github/workflows/js/dangerfile.ts'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_TOKEN }}
-        DANGER_JS_APP_INSTALL_ID: ${{ secrets.DANGER_JS_APP_INSTALL_ID }}
