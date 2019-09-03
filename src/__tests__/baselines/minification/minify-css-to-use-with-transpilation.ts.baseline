@@ -36,11 +36,24 @@ Source code:
 TypeScript before transform:
 
   declare const styled: any;
-  const Simple = styled.div \`\\n  width: 100%;\\n\`;
-  const Interpolation = styled.div \`\\n  content: "  \${props => props.text}  ";\\n\`;
-  const SpecialCharacters = styled.div \`\\n  content: "  \${props => props.text}  ";\\n color: red;\\n\`;
-  const Comment = styled.div \`\\n  // comment\\n  color: red;\\n\`;
-  const Parens = styled.div \`\\n  &:hover {\\n    color: blue;\\n  }\\n\`;
+  const Simple = styled.div \`
+    width: 100%;
+  \`;
+  const Interpolation = styled.div \`
+    content: "  \${props => props.text}  ";
+  \`;
+  const SpecialCharacters = styled.div \`
+    content: "  \${props => props.text}  ";\\n color: red;
+  \`;
+  const Comment = styled.div \`
+    // comment
+    color: red;
+  \`;
+  const Parens = styled.div \`
+    &:hover {
+      color: blue;
+    }
+  \`;
   export {};
   
 
