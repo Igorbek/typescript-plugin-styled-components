@@ -364,7 +364,7 @@
   dependencies:
     "@types/jest-diff" "*"
 
-"@types/node@*", "@types/node@^12.7.4":
+"@types/node@^12.7.4":
   version "12.7.4"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.7.4.tgz#64db61e0359eb5a8d99b55e05c729f130a678b04"
   integrity sha512-W0+n1Y+gK/8G2P/piTkBBN38Qc5Q1ZSO6B5H3QmPCUewaiXOo2GCAWZ4ElZCcNhjJuBSUSLGFUJnmlCn5+nxOQ==
@@ -373,6 +373,14 @@
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.8.tgz#8ae4e0ea205fe95c3901a5a1df7f66495e3a56ce"
   integrity sha512-3AQoUxQcQtLHsK25wtTWIoIpgYjH3vSDroZOUr7PpCHw/jLY1RB9z9E8dBT/OSmwStVgkRNvdh+ZHNiomRieaw==
+
+"@types/react-native@*":
+  version "0.60.11"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.11.tgz#c797f89180291c3a1d6f573f1e89644c8c17f60e"
+  integrity sha512-JAe7/UCGhnXxTwHCix1Gs6EbbCTeqU8TxxKHKNrsVtECZ9cPYp1UmJoDIDaNTz8o1/9nTFOtPj7CvHp2hWpEIQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/react" "*"
 
 "@types/react@*", "@types/react@^16.7.22":
   version "16.9.2"
@@ -388,12 +396,12 @@
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
 
 "@types/styled-components@^4.1.6":
-  version "4.1.6"
-  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.6.tgz#9aa1d47dbc6bae540083869bcc6c639c6e9af0fe"
-  integrity sha512-w/ra/Tk9oPMvWpWId7esZNY1MOa6E9BYUPLl4scVJdYnrYuy5ITLbku8dGDCVH/vjjuegrHBCRYvFLQOYJ+uHg==
+  version "4.1.18"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.18.tgz#348804fe5a399ae0a46550afaf030085815ad931"
+  integrity sha512-VrHkgvjbxQXOw0xWSUckusUUZ4y/jqN1u7kF29ngh0oE6uOrlZHleTgqeUqylQqHQIeQ8MxFb50BRHy8ju5DHg==
   dependencies:
-    "@types/node" "*"
     "@types/react" "*"
+    "@types/react-native" "*"
     csstype "^2.2.0"
 
 "@types/yargs-parser@*":
