@@ -1,0 +1,17 @@
+name: Danger
+
+on: [pull_request]
+
+jobs:
+  danger:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Danger
+      uses: danger/danger-js@9.1.6
+      with:
+        args: '--dangerfile ./.github/workflows/js/dangerfile.ts --use-github-checks'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
