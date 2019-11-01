@@ -351,9 +351,9 @@
   integrity sha512-yALhelO3i0hqZwhjtcr6dYyaLoCHbAMshwtj6cGxTvHZAKXHsYGdff6E8EPw3xLKY0ELUTQ69Q1rQiJENnccMA==
 
 "@types/jest-specific-snapshot@^0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@types/jest-specific-snapshot/-/jest-specific-snapshot-0.5.3.tgz#03c2283b79b17b5df29da45d1e7dd6b45f341e02"
-  integrity sha512-PDc7ToEzqMx/7JdbFs2G6qdRcWMYXOe4xPMpTA8vNST5CMARSu84Y2dZdaCLyzcd4FcDLMLCcDIzM15VBQ3t+w==
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@types/jest-specific-snapshot/-/jest-specific-snapshot-0.5.4.tgz#997364c39a59ddeff0ee790a19415e79dd061d1e"
+  integrity sha512-1qISn4fH8wkOOPFEx+uWRRjw6m/pP/It3OHLm8Ee1KQpO7Z9ZGYDtWPU5AgK05UXsNTAgOK+dPQvJKGdy9E/1g==
   dependencies:
     "@types/jest" "*"
 
