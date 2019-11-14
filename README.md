@@ -147,7 +147,7 @@ options: {
 TypeScript command line compiler tool (`tcs`) does not support using of pluggable modules and transformers.
 For that reason there are other tools created that do support pluggable transformers. See [`ttypescript` compiler](#ttypescript-compiler) section.
 
-# `ttypescript` compiler
+# `typescript` compiler
 
 The [`ttypescript` compiler](https://github.com/cevek/ttypescript) is a CLI tool that allows to use TypeScript compiler with pluggable transformers.
 To use the transformer with that tool you can configure it by updating `tsconfig.json` the following way:
