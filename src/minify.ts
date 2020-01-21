@@ -14,11 +14,15 @@ function isSymbol(ch: string) {
     return ch == ';' || ch == ':' || ch == '{' || ch == '}' || ch == ',';
 }
 
+function isSpace(ch: string) {
+    return ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t';
+}
+
 const stateMachine: StateMachine = {
     ';': {
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
-            if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true }
+            if (isSpace(ch)) return { skipEmit: true }
             if (ch == '/') return { state: ';/', skipEmit: true }
             if (isSymbol(ch)) return;
             return { state: 'x' }
@@ -30,7 +34,7 @@ const stateMachine: StateMachine = {
     ';$': { // after placeholder
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
-            if (ch == ' ' || ch == '\n' || ch == '\r') return { skipEmit: true, state: ' ' } // we may need a space
+            if (isSpace(ch)) return { skipEmit: true, state: ' ' } // we may need a space
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
             return { state: 'x' }
@@ -39,7 +43,7 @@ const stateMachine: StateMachine = {
     'x': {
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
-            if (ch == ' ' || ch == '\n' || ch == '\r') return { state: ' ', skipEmit: true }
+            if (isSpace(ch)) return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
         }
@@ -47,7 +51,7 @@ const stateMachine: StateMachine = {
     ' ': { // may need space
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: ' ' + ch }
-            if (ch == ' ' || ch == '\n' || ch == '\r') return { state: ' ', skipEmit: true }
+            if (isSpace(ch)) return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
             return { state: 'x', emit: ' ' + ch };
@@ -59,7 +63,7 @@ const stateMachine: StateMachine = {
     '\n': { // may need new line
         next(ch) {
             if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: '\n' + ch }
-            if (ch == ' ' || ch == '\n' || ch == '\r') return { state: '\n', skipEmit: true }
+            if (isSpace(ch)) return { state: '\n', skipEmit: true }
             if (ch == '/') return { state: '/', emit: '\n' }
             if (isSymbol(ch)) return { state: ';', emit: '\n' + ch };
             return { state: 'x', emit: '\n' + ch };

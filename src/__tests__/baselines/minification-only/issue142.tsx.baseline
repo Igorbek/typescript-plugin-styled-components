@@ -33,7 +33,7 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  const Header = styled.div \`	display:flex;	 align-items:center;	justify-content:space-between;	 	 font-weight:600;	padding:0.8em 1.6em;	 	 	background:peachpuff;\`;
+  const Header = styled.div \`display:flex;align-items:center;justify-content:space-between;font-weight:600;padding:0.8em 1.6em;background:peachpuff;\`;
   
 
 
