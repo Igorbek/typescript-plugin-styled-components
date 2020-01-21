@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`issue142.tsx 1`] = `
+
+File: issue142.tsx
+Source code:
+
+  declare const styled: any;
+  
+  const Header = styled.div\`
+  	display: flex;
+  \\t  align-items: center;
+  	justify-content: space-between;
+  \\t \\t font-weight: 600;
+  	padding: 0.8em 1.6em;\\t \\t
+  	background: peachpuff;
+  \`;
+  
+
+TypeScript before transform:
+
+  declare const styled: any;
+  const Header = styled.div \`
+  	display: flex;
+  \\t  align-items: center;
+  	justify-content: space-between;
+  \\t \\t font-weight: 600;
+  	padding: 0.8em 1.6em;\\t \\t
+  	background: peachpuff;
+  \`;
+  
+
+TypeScript after transform:
+
+  declare const styled: any;
+  const Header = styled.div.withConfig({ displayName: "Header" }) \`display:flex;align-items:center;justify-content:space-between;font-weight:600;padding:0.8em 1.6em;background:peachpuff;\`;
+  
+
+
+`;
