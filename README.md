@@ -20,6 +20,7 @@ The following command adds the packages to the project as a development-time dep
   - [`awesome-typescript-loader`](#awesome-typescript-loader)
   - [`ts-loader`](#ts-loader)
   - [Forked process configuration](#Forked-process-configuration)
+- [Integration with `Rollup`](#Integration-with-Rollup)
 - [TypeScript compiler (CLI)](#TypeScript-compiler-CLI)
 - [`ttypescript` compiler](#ttypescript-compiler)
 - [API](#API)
@@ -140,6 +141,38 @@ options: {
 -    getCustomTransformers: () => ({ before: [styledComponentsTransformer] })
 +    getCustomTransformers: path.join(__dirname, './webpack.ts-transformers.js')
 }
+```
+
+# Integration with `Rollup`
+
+This section describes how to integrate the plugin into the build/bundling process driven by [**Rollup**](https://rollupjs.org/guide/en/) and its TypeScript loader - [**rollup-plugin-typescript2**](https://github.com/Igorbek/typescript-plugin-styled-components).
+
+In the `rollup.config.js` file in the section where **rollup-plugin-typescript2** is configured as a loader:
+
+```js
+// 1. import default from the plugin module
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+
+// 2. create a transformer;
+// the factory additionally accepts an options object which described below
+const styledComponentsTransformer = createStyledComponentsTransformer();
+
+// 3. add getCustomTransformer method to the loader config
+var config = {
+    ...
+    plugins: [
+      rollupTypescript({
+        ...
+        transformers: [
+          () => ({
+            before: [styledComponentsTransformer],
+          }),
+        ],
+      }),
+    ...
+    ],
+    ...
+};
 ```
 
 # TypeScript compiler (CLI)
