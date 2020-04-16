@@ -8,6 +8,8 @@ The plugin was mostly inspired by great Babel's plugin [`babel-plugin-styled-com
 
 If you like it, consider [![Buy me a coffee](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/igorbek)
 
+Note: This transformer will be useful to you only when you are transpiling your TS code using actual TS compiler, like `tsc` `ts-loader` or `awesome-typescript-loader`. If your TS code is transpiled using [`babel-plugin-transform-typescript`](https://babeljs.io/docs/en/babel-plugin-transform-typescript), you should use [`babel-plugin-styled-components`](https://github.com/styled-components/babel-plugin-styled-components) instead.
+
 # Installation
 
 The following command adds the packages to the project as a development-time dependency:
