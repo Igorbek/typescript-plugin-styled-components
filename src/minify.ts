@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
-type State = ';' | ';$' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | ';/' | ';//' | '/$' | '//$' | '/*' | '/**' | ';/*' | ';/**' | '/*$' | '/*$*';
+type State = ';' | ';$' | 'x' | ' ' | '\n' | '"' | '(' | "((" | '\'' | '/' | '//' | ';/' | ';//' | '/$' | '//$' | '/*' | '/**' | ';/*' | ';/**' | '/*$' | '/*$*';
 type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State; } | void;
 type StateMachine = {
     [K in State]: {
@@ -81,7 +81,13 @@ const stateMachine: StateMachine = {
     },
     '(': {
         next(ch) {
+            if (ch == "(") return { state: '((' };
             if (ch == ')') return { state: ';' };   // maybe return ' '? then it'd always add space after
+        }
+    },
+    '((': {
+        next(ch) {
+            if(ch == ')') return { state: "(" };
         }
     },
     '/': {
