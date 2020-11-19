@@ -69,26 +69,26 @@ TypeScript after transform:
 
   declare const styled: any;
   const Button = styled.button.withConfig({ displayName: "Button" })({
-      color: 'red'
+      color: "red"
   });
   declare const nonStyled: any;
   const NonButton = nonStyled.button({
-      color: 'red'
+      color: "red"
   });
   const OtherButton = styled(Button).withConfig({ displayName: "OtherButton" })({
-      color: 'blue'
+      color: "blue"
   });
   const SuperButton = Button.extend.withConfig({ displayName: "SuperButton" })({
-      color: 'super'
+      color: "super"
   });
   export default styled.link({
-      color: 'black'
+      color: "black"
   });
   export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton" })({
-      fontSize: '.7em'
+      fontSize: ".7em"
   });
   const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton" })({
-      fontSize: '.1em'
+      fontSize: ".1em"
   });
   
 

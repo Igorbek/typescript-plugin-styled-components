@@ -39,14 +39,14 @@ TypeScript before transform:
 
 TypeScript after transform:
 
-  import * as React from 'react';
-  import styled from '../themed-styled';
-  import { SmallButton } from './sample1';
+  import * as React from "react";
+  import styled from "../themed-styled";
+  import { SmallButton } from "./sample1";
   interface LabelProps {
       size: number;
   }
   const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "sc-1ydgk9x" }) \`
-      font-size: \${(props: LabelProps) => props.size + 'px'}
+      font-size: \${(props: LabelProps) => props.size + "px"}
   \`;
   const LabeledLink = () => <SmallButton />;
   export default CustomLabel;

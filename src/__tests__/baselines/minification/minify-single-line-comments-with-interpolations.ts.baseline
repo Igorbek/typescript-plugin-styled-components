@@ -105,16 +105,16 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  const Test1 = styled.div.withConfig({ displayName: "Test1" }) \`width:100%;//\${'red'}\`;
-  const Test2 = styled.div.withConfig({ displayName: "Test2" }) \`width:100%;//\${'red'}\`;
-  const Test3 = styled.div.withConfig({ displayName: "Test3" }) \`width:100%;\${'red'};\`;
-  const Test4 = styled.div.withConfig({ displayName: "Test4" }) \`width:100%;//\${'red'}\`;
-  const Test5 = styled.div.withConfig({ displayName: "Test5" }) \`width:100%;//\${'red'}\${'blue'}\`;
-  const Test6 = styled.div.withConfig({ displayName: "Test6" }) \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
-  const Test7 = styled.div.withConfig({ displayName: "Test7" }) \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}
+  const Test1 = styled.div.withConfig({ displayName: "Test1" }) \`width:100%;//\${"red"}\`;
+  const Test2 = styled.div.withConfig({ displayName: "Test2" }) \`width:100%;//\${"red"}\`;
+  const Test3 = styled.div.withConfig({ displayName: "Test3" }) \`width:100%;\${"red"};\`;
+  const Test4 = styled.div.withConfig({ displayName: "Test4" }) \`width:100%;//\${"red"}\`;
+  const Test5 = styled.div.withConfig({ displayName: "Test5" }) \`width:100%;//\${"red"}\${"blue"}\`;
+  const Test6 = styled.div.withConfig({ displayName: "Test6" }) \`background:url("https://google.com");width:100%;\${"green"}//\${"red"}\${"blue"}\`;
+  const Test7 = styled.div.withConfig({ displayName: "Test7" }) \`background:url("https://google.com");width:\${p => p.props.width};\${"green"}//\${"red"}\${"blue"}
   height:\${p => p.props.height};\`;
-  const Test8 = styled.dev.withConfig({ displayName: "Test8" }) \`color:/*\${'red'}*/blue;\`;
-  const Test9 = styled.dev.withConfig({ displayName: "Test9" }) \`color://\${'red'}
+  const Test8 = styled.dev.withConfig({ displayName: "Test8" }) \`color:/*\${"red"}*/blue;\`;
+  const Test9 = styled.dev.withConfig({ displayName: "Test9" }) \`color://\${"red"}
   blue\`;
   export {};
   

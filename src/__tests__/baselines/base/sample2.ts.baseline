@@ -24,7 +24,7 @@ TypeScript before transform:
 
 TypeScript after transform:
 
-  import styled from 'styled-components';
+  import styled from "styled-components";
   const styled2 = styled;
   const NonButton = styled.button;
   const NonStyled = styled \`  color: red; \`;

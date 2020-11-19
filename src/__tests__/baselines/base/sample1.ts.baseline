@@ -67,7 +67,7 @@ TypeScript before transform:
 
 TypeScript after transform:
 
-  import styled from 'styled-components';
+  import styled from "styled-components";
   const Button = styled.button.withConfig({ displayName: "Button" }) \`
     color: red;
   \`;

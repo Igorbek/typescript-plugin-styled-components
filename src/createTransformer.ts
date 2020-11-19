@@ -129,23 +129,23 @@ export function createTransformer({
      * (const|var|let) ComponentName = styled...
      * export default styled...
     */
-    function getDisplayNameFromNode(node: ts.Node): string | undefined {
+    function getDisplayNameFromNode(node: ts.Node, sourceFile: ts.SourceFile): string | undefined {
         if (isVariableDeclaration(node) && isIdentifier(node.name)) {
-            return getDisplayName(node.getSourceFile().fileName, node.name.text);
+            return getDisplayName(sourceFile.fileName, node.name.text);
         }
 
         if (isExportAssignment(node)) {
-            return getDisplayName(node.getSourceFile().fileName, undefined);
+            return getDisplayName(sourceFile.fileName, undefined);
         }
 
         return undefined;
     }
 
-    function getIdFromNode(node: ts.Node, sourceRoot: string | undefined, position: number): string | undefined {
+    function getIdFromNode(node: ts.Node, sourceRoot: string | undefined, position: number, sourceFile: ts.SourceFile): string | undefined {
         if ((isVariableDeclaration(node) && isIdentifier(node.name)) || isExportAssignment(node)) {
-            const fileName = node.getSourceFile().fileName;
+            const fileName = sourceFile.fileName;
             const filePath = sourceRoot ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep) : fileName;
-            return 'sc-' + hash(`${getDisplayNameFromNode(node)}${filePath}${position}`);
+            return 'sc-' + hash(`${getDisplayNameFromNode(node, sourceFile)}${filePath}${position}`);
         }
         return undefined;
     }
@@ -155,8 +155,9 @@ export function createTransformer({
 
         return (node) => {
             let lastComponentPosition = 0;
+            const sourceFile = node.getSourceFile();
 
-            const visitor: ts.Visitor = (node) => {
+            const visitor = (parent: ts.Node, parentParent?: ts.Node): ts.Visitor => (node: ts.Node) => {
                 if (
                     minify
                     && isTaggedTemplateExpression(node)
@@ -164,37 +165,35 @@ export function createTransformer({
                 ) {
                     const minifiedTemplate = minifyTemplate(node.template);
                     if (minifiedTemplate && minifiedTemplate !== node.template) {
-                        const newNode = ts.createTaggedTemplate(node.tag, node.typeArguments, minifiedTemplate);
-                        newNode.parent = node.parent;
-                        node = newNode;
+                        node = ts.createTaggedTemplate(node.tag, node.typeArguments, minifiedTemplate);
                     }
                 }
 
                 if (
-                    node.parent
+                    parent
                     && (
-                        isTaggedTemplateExpression(node.parent) && node.parent.tag === node
-                        || isCallExpression(node.parent)
+                        isTaggedTemplateExpression(parent) && parent.tag === node
+                        || isCallExpression(parent)
                     )
-                    && node.parent.parent
-                    && isVariableDeclaration(node.parent.parent)
+                    && parentParent
+                    && isVariableDeclaration(parentParent)
                     && isStyledFunction(node, identifiers)
                 ) {
 
                     const styledConfig = [];
 
                     if (displayName) {
-                        const displayNameValue = getDisplayNameFromNode(node.parent.parent);
+                        const displayNameValue = getDisplayNameFromNode(parentParent, sourceFile);
                         if (displayNameValue) {
                             styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
-                        }                    
+                        }
                     }
 
                     if (ssr) {
-                        const componentId = getIdFromNode(node.parent.parent, sourceRoot, ++lastComponentPosition);
+                        const componentId = getIdFromNode(parentParent, sourceRoot, ++lastComponentPosition, sourceFile);
                         if (componentId) {
-                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
-                        }                                           
+                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId)));
+                        }
                     }
 
                     if (styledConfig.length > 0) {
@@ -205,15 +204,10 @@ export function createTransformer({
                     }
                 }
 
-                ts.forEachChild(node, n => {
-                    if (!n.parent)
-                        n.parent = node;
-                });
-
-                return ts.visitEachChild(node, visitor, context);
+                return ts.visitEachChild(node, visitor(node, parent), context);
             }
 
-            return ts.visitNode(node, visitor);
+            return ts.visitNode(node, visitor(node.parent));
         };
     };
 

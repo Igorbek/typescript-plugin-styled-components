@@ -39,7 +39,7 @@ TypeScript before transform:
 
 TypeScript after transform:
 
-  import styled from 'styled-components';
+  import styled from "styled-components";
   export function createButtons() {
       const A = styled.button.withConfig({ displayName: "A", componentId: "sc-hana72" }) \` color: red; \`;
       const B = styled(A).withConfig({ displayName: "B", componentId: "sc-ke4nds" }) \` color: blue; \`;
