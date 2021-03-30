@@ -81,13 +81,13 @@ TypeScript after transform:
   const SuperButton = Button.extend.withConfig({ displayName: "SuperButton", componentId: "sc-1t5v351" })({
       color: 'super'
   });
-  export default styled.link({
+  export default styled.link.withConfig({ componentId: "sc-115bov" })({
       color: 'black'
   });
-  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton", componentId: "sc-ftk9hu" })({
+  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton", componentId: "sc-blt0bk" })({
       fontSize: '.7em'
   });
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-15rszef" })({
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-96ogu9" })({
       fontSize: '.1em'
   });
   
