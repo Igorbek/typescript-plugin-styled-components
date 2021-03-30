@@ -39,7 +39,7 @@ TypeScript after transform:
   declare const jQuery: any;
   declare const _: any;
   declare const Button: any;
-  const Button1 = Button.extend.withConfig({ displayName: "Button1", componentId: "sc-1iinolv" }) \` color: red \`;
+  const Button1 = Button.extend \` color: red \`;
   const Button2 = $.extend \` color: red \`;
   const Button3 = jQuery.extend \` color: red \`;
   const Button4 = _.extend \` color: red \`;

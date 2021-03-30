@@ -78,16 +78,16 @@ TypeScript after transform:
   const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-ce0fkl" }) \`
     color: blue;
   \`;
-  const SuperButton = Button.extend.withConfig({ displayName: "SuperButton", componentId: "sc-10xv1bi" }) \`
+  const SuperButton = Button.extend \`
     color: super;
   \`;
   export default styled.link \`
     color: black;
   \`;
-  export const SmallButton = Button.extend.withConfig({ displayName: "SmallButton", componentId: "sc-8sh5f7" }) \`
+  export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-v7haos" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "sc-13fgjrc" }) \`
     font-size: .1em;
   \`;
   
