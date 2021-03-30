@@ -28,9 +28,7 @@ function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): 
             return true;
         }
 
-        if (node.name.text === 'extend'
-            && isValidComponent(node.expression)) {
-
+        if (isStyledExtendIdentifier(node.name.text, identifiers)) {
             return true;
         }
 
@@ -95,6 +93,10 @@ function isStyledCssIdentifier(name: string, { css = ['css'] }: CustomStyledIden
 
 function isStyledCreateGlobalStyleIdentifier(name: string, { createGlobalStyle = ['createGlobalStyle'] }: CustomStyledIdentifiers) {
     return createGlobalStyle.indexOf(name) >= 0;
+}
+
+function isStyledExtendIdentifier(name: string, { extend = [] }: CustomStyledIdentifiers) {
+    return extend.indexOf(name) >= 0;
 }
 
 function isMinifyableStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers) {
