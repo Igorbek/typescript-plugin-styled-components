@@ -179,7 +179,7 @@ export function createTransformer({
                         || isCallExpression(node.parent)
                     )
                     && node.parent.parent
-                    && isVariableDeclaration(node.parent.parent)
+                    && (isVariableDeclaration(node.parent.parent) || isExportAssignment(node.parent.parent))
                     && isStyledFunction(node, identifiers)
                 ) {
 
