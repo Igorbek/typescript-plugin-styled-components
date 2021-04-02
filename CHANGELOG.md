@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- transform anonymous default exports (fix #371 in #367)
+
 ## [1.4.4]
 
 - bugfix in minification of tabs (fix #142 in #152)
