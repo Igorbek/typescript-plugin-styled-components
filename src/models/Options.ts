@@ -76,4 +76,11 @@ export interface CustomStyledIdentifiers {
      * @defaultValue `['createGlobalStyle']`
      */
     createGlobalStyle?: string[];
+
+    /**
+     * Identifiers of `extend` function.
+     * 
+     * @defaultValue `[]`
+     */
+     extend?: string[];
 }
