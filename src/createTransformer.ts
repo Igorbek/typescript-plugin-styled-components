@@ -28,7 +28,8 @@ function isStyledFunction(node: ts.Node, identifiers: CustomStyledIdentifiers): 
             return true;
         }
 
-        if (isStyledExtendIdentifier(node.name.text, identifiers)) {
+        if (isStyledExtendIdentifier(node.name.text, identifiers)
+            && isValidComponent(node.expression)) {
             return true;
         }
 
