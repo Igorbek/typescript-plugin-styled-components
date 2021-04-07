@@ -1,6 +1,6 @@
 {
     "name": "typescript-plugin-styled-components",
-    "version": "1.4.4",
+    "version": "1.5.0",
     "description": "TypeScript transformer for improving the debugging experience of styled-components",
     "main": "dist/index.js",
     "homepage": "https://github.com/Igorbek/typescript-plugin-styled-components",
