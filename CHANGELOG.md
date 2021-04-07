@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [1.5.0]
+
 - transform anonymous default exports (fix #371 in #367)
 - remove deprecated `.extend` transformation pattern (fix #48 in #370)
 
