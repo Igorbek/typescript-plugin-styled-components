@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 - transform anonymous default exports (fix #371 in #367)
-- remove deprecated .extend transformation pattern (fix #48 in #370)
+- remove deprecated `.extend` transformation pattern (fix #48 in #370)
 
 ## [1.4.4]
 
@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 ## [1.4.0]
 
 - add experimental support of minification (#14, #35)
-- skip emitting empty withConfig (#37)
+- skip emitting empty `withConfig` (#37)
 
 ## [1.4.0-rc]
 

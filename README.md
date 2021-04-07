@@ -289,6 +289,7 @@ interface CustomStyledIdentifiers {
     keyframes: string[];
     css: string[];
     createGlobalStyle: string[];
+    extend: string[];
 }
 ```
 
@@ -297,6 +298,7 @@ interface CustomStyledIdentifiers {
 - `keyframes` - list of identifiers of `keyframes` API (default `['keyframes']`)
 - `css` - list of identifiers of `css` API (default `['css']`)
 - `createGlobalStyle` - list of identifiers of `createGlobalStyle` API (default `['createGlobalStyle']`)
+- `extend` - list of identifiers of `extend` API (default `[]`). Note this API has been deprecated in `styled-components` so starting from `1.5` this option by default has empty set, which means it does not recognize this API by default.
 
 Example
 
