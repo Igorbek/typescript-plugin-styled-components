@@ -64,7 +64,8 @@ All notable changes to this project will be documented in this file.
 - updated `typescript` dependency to support TS 3.0+ (#17, fixed #15)
 - remove `ts-is-kind` dependency (#17, fixed #16)
 
-[Unreleased]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.4...HEAD
+[Unreleased]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.4...1.5.0
 [1.4.4]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.3...1.4.4
 [1.4.3]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.1...1.4.2
