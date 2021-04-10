@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- **breaking change** upgrade to TypeScript 4+ and make use of Factory API (#379)
+
 ## [1.5.0]
 
 - transform anonymous default exports (fix #371 in #367)
