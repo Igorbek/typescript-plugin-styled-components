@@ -30,18 +30,18 @@ TypeScript before transform:
 
   declare const styled: any;
   export const A = styled.div \`
-    border: \${"solid"} 10px;
+    border: \${'solid'} 10px;
   \`;
   styled.div \`
-    border: \${"solid"}// comment here
+    border: \${'solid'}// comment here
   10px;
     border: solid// comment here
   10px;
   \`;
   styled.div \`
-    border: \${"solid"}/* comment here
+    border: \${'solid'}/* comment here
   */10px;
-    border: \${"solid"}/* comment here
+    border: \${'solid'}/* comment here
   */ 10px;
   \`;
   
@@ -49,6 +49,13 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
+  export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'} 10px;\`;
+  styled.div \`border:\${'solid'} 10px;border:solid 10px;\`;
+  styled.div \`border:\${'solid'} 10px;border:\${'solid'} 10px;\`;
+  
+
+TypeScript after transpile module:
+
   export const A = styled.div.withConfig({ displayName: "A" }) \`border:\${'solid'} 10px;\`;
   styled.div \`border:\${'solid'} 10px;border:solid 10px;\`;
   styled.div \`border:\${'solid'} 10px;border:\${'solid'} 10px;\`;

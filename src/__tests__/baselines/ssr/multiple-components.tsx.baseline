@@ -24,7 +24,7 @@ Source code:
 
 TypeScript before transform:
 
-  import styled from "styled-components";
+  import styled from 'styled-components';
   export function createButtons() {
       const A = styled.button \` color: red; \`;
       const B = styled(A) \` color: blue; \`;
@@ -48,6 +48,21 @@ TypeScript after transform:
   export function createDivs() {
       const A = styled.div.withConfig({ displayName: "A", componentId: "sc-1q7vmnt" }) \` color: green; \`;
       const B = styled(A).withConfig({ displayName: "B", componentId: "sc-7q8oop" }) \` color: yellow; \`;
+      return { A, B };
+  }
+  
+
+TypeScript after transpile module:
+
+  import styled from 'styled-components';
+  export function createButtons() {
+      const A = styled.button.withConfig({ displayName: "A", componentId: "sc-67koye" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-1svbc9u" }) \` color: blue; \`;
+      return { A, B };
+  }
+  export function createDivs() {
+      const A = styled.div.withConfig({ displayName: "A", componentId: "sc-uo2lv8" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "sc-1cxyj9q" }) \` color: yellow; \`;
       return { A, B };
   }
   

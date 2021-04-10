@@ -15,7 +15,7 @@ Source code:
 
 TypeScript before transform:
 
-  import styled from "styled-components";
+  import styled from 'styled-components';
   const styled2 = styled;
   const NonButton = styled.button;
   const NonStyled = styled \`  color: red; \`;
@@ -29,6 +29,15 @@ TypeScript after transform:
   const NonButton = styled.button;
   const NonStyled = styled \`  color: red; \`;
   const Link = styled(NonStyled).withConfig({ displayName: "Link", componentId: "sc-1xlc242" }) \` color: red; \`;
+  
+
+TypeScript after transpile module:
+
+  import styled from 'styled-components';
+  const styled2 = styled;
+  const NonButton = styled.button;
+  const NonStyled = styled \`  color: red; \`;
+  const Link = styled(NonStyled).withConfig({ displayName: "Link", componentId: "sc-z7xxm1" }) \` color: red; \`;
   
 
 

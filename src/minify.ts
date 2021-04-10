@@ -218,19 +218,19 @@ export function createMinifier(): (next: string, last?: boolean) => string {
     }
 }
 
-export function minifyTemplate(templateLiteral: ts.TemplateLiteral) {
+export function minifyTemplate(templateLiteral: ts.TemplateLiteral, factory: ts.NodeFactory) {
     const minifier = createMinifier();
 
     if (isNoSubstitutionTemplateLiteral(templateLiteral)) {
-        const node = ts.createNoSubstitutionTemplateLiteral(minifier(templateLiteral.text, true));
+        const node = factory.createNoSubstitutionTemplateLiteral(minifier(templateLiteral.text, true));
         return node;
     } else if (isTemplateExpression(templateLiteral)) {
-        const head = ts.createTemplateHead(minifier(templateLiteral.head.text));
-        const templateSpans = templateLiteral.templateSpans.map(span => ts.createTemplateSpan(span.expression,
+        const head = factory.createTemplateHead(minifier(templateLiteral.head.text));
+        const templateSpans = templateLiteral.templateSpans.map(span => factory.createTemplateSpan(span.expression,
             span.literal.kind === ts.SyntaxKind.TemplateMiddle
-                ? ts.createTemplateMiddle(minifier(span.literal.text))
-                : ts.createTemplateTail(minifier(span.literal.text, true))));
-        const node = ts.createTemplateExpression(head, templateSpans);
+                ? factory.createTemplateMiddle(minifier(span.literal.text))
+                : factory.createTemplateTail(minifier(span.literal.text, true))));
+        const node = factory.createTemplateExpression(head, templateSpans);
         return node;
     }
 

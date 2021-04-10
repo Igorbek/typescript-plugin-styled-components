@@ -40,7 +40,7 @@ Source code:
 
 TypeScript before transform:
 
-  import styled from "styled-components";
+  import styled from 'styled-components';
   const Button = styled.button \`
     color: red;
   \`;
@@ -60,7 +60,7 @@ TypeScript before transform:
   export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }) \`
     font-size: .1em;
   \`;
   
@@ -87,7 +87,33 @@ TypeScript after transform:
   export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton" }) \`
+    font-size: .1em;
+  \`;
+  
+
+TypeScript after transpile module:
+
+  import styled from 'styled-components';
+  const Button = styled.button.withConfig({ displayName: "Button" }) \`
+    color: red;
+  \`;
+  const NonButton = nonStyled.button \`
+    yo
+  \`;
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton" }) \`
+    color: blue;
+  \`;
+  const SuperButton = Button.extend \`
+    color: super;
+  \`;
+  export default styled.link \`
+    color: black;
+  \`;
+  export const SmallButton = Button.extend \`
+    font-size: .7em;
+  \`;
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton" }) \`
     font-size: .1em;
   \`;
   

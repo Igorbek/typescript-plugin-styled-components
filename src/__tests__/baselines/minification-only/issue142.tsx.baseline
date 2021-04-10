@@ -36,5 +36,10 @@ TypeScript after transform:
   const Header = styled.div \`display:flex;align-items:center;justify-content:space-between;font-weight:600;padding:0.8em 1.6em;background:peachpuff;\`;
   
 
+TypeScript after transpile module:
+
+  const Header = styled.div \`display:flex;align-items:center;justify-content:space-between;font-weight:600;padding:0.8em 1.6em;background:peachpuff;\`;
+  
+
 
 `;

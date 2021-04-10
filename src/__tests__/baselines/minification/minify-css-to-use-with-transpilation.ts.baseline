@@ -68,5 +68,15 @@ TypeScript after transform:
   export {};
   
 
+TypeScript after transpile module:
+
+  const Simple = styled.div.withConfig({ displayName: "Simple" }) \`width:100%;\`;
+  const Interpolation = styled.div.withConfig({ displayName: "Interpolation" }) \`content:"  \${props => props.text}  ";\`;
+  const SpecialCharacters = styled.div.withConfig({ displayName: "SpecialCharacters" }) \`content:"  \${props => props.text}  ";color:red;\`;
+  const Comment = styled.div.withConfig({ displayName: "Comment" }) \`color:red;\`;
+  const Parens = styled.div.withConfig({ displayName: "Parens" }) \`&:hover{color:blue;}\`;
+  export {};
+  
+
 
 `;
