@@ -138,11 +138,11 @@ export function createTransformer({
      */
     function getDisplayNameFromNode(node: ts.Node, sourceFile: ts.SourceFile): string | undefined {
         if (isVariableDeclaration(node) && isIdentifier(node.name)) {
-            return getDisplayName(node.getSourceFile().fileName, node.name.text);
+            return getDisplayName(sourceFile.fileName, node.name.text);
         }
 
         if (isExportAssignment(node)) {
-            return getDisplayName(node.getSourceFile().fileName, undefined);
+            return getDisplayName(sourceFile.fileName, undefined);
         }
 
         return undefined;
@@ -155,7 +155,7 @@ export function createTransformer({
         sourceFile: ts.SourceFile
     ): string | undefined {
         if ((isVariableDeclaration(node) && isIdentifier(node.name)) || isExportAssignment(node)) {
-            const fileName = node.getSourceFile().fileName;
+            const fileName = sourceFile.fileName;
             const filePath = sourceRoot
                 ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep)
                 : fileName;
