@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sample2.ts 1`] = `
+
+File: sample2.ts
+Source code:
+
+  import styled from 'styled-components';
+  
+  const styled2 = styled;
+  const NonButton = styled.button;
+  const NonStyled = styled\`  color: red; \`;
+  const Link = styled(NonStyled)\` color: red; \`;
+  
+
+TypeScript before transform:
+
+  import styled from "styled-components";
+  const styled2 = styled;
+  const NonButton = styled.button;
+  const NonStyled = styled \`  color: red; \`;
+  const Link = styled(NonStyled) \` color: red; \`;
+  
+
+TypeScript after transform:
+
+  import styled from 'styled-components';
+  const styled2 = styled;
+  const NonButton = styled.button;
+  const NonStyled = styled \`  color: red; \`;
+  const Link = styled(NonStyled).withConfig({ displayName: "Link", componentId: "test-1xlc242" }) \` color: red; \`;
+  
+
+
+`;

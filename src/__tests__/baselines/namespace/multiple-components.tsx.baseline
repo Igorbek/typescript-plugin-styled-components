@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`multiple-components.tsx 1`] = `
+
+File: multiple-components.tsx
+Source code:
+
+  import styled from 'styled-components';
+  
+  export function createButtons() {
+      const A = styled.button\` color: red; \`;
+      const B = styled(A)\` color: blue; \`;
+  
+      return { A, B };
+  }
+  
+  export function createDivs() {
+      const A = styled.div\` color: green; \`;
+      const B = styled(A)\` color: yellow; \`;
+  
+      return { A, B };
+  }
+  
+
+TypeScript before transform:
+
+  import styled from "styled-components";
+  export function createButtons() {
+      const A = styled.button \` color: red; \`;
+      const B = styled(A) \` color: blue; \`;
+      return { A, B };
+  }
+  export function createDivs() {
+      const A = styled.div \` color: green; \`;
+      const B = styled(A) \` color: yellow; \`;
+      return { A, B };
+  }
+  
+
+TypeScript after transform:
+
+  import styled from 'styled-components';
+  export function createButtons() {
+      const A = styled.button.withConfig({ displayName: "A", componentId: "test-hana72" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "test-ke4nds" }) \` color: blue; \`;
+      return { A, B };
+  }
+  export function createDivs() {
+      const A = styled.div.withConfig({ displayName: "A", componentId: "test-1q7vmnt" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "B", componentId: "test-7q8oop" }) \` color: yellow; \`;
+      return { A, B };
+  }
+  
+
+
+`;

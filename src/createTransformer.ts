@@ -122,7 +122,8 @@ export function createTransformer({
     identifiers = {},
     ssr = true,
     displayName = true,
-    minify = false
+    minify = false,
+    namespace = '',
 } : Partial<Options> = {}) {
 
     /**
@@ -144,11 +145,11 @@ export function createTransformer({
         return undefined;
     }
 
-    function getIdFromNode(node: ts.Node, sourceRoot: string | undefined, position: number): string | undefined {
+    function getIdFromNode(node: ts.Node, sourceRoot: string | undefined, position: number, namespace?: string): string | undefined {
         if ((isVariableDeclaration(node) && isIdentifier(node.name)) || isExportAssignment(node)) {
             const fileName = node.getSourceFile().fileName;
             const filePath = sourceRoot ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep) : fileName;
-            return 'sc-' + hash(`${getDisplayNameFromNode(node)}${filePath}${position}`);
+            return `${namespace ? namespace : 'sc'}-` + hash(`${getDisplayNameFromNode(node)}${filePath}${position}`);
         }
         return undefined;
     }
@@ -190,15 +191,22 @@ export function createTransformer({
                         const displayNameValue = getDisplayNameFromNode(node.parent.parent);
                         if (displayNameValue) {
                             styledConfig.push(ts.createPropertyAssignment('displayName', ts.createLiteral(displayNameValue)));
-                        }                    
+                        }
                     }
 
-                    if (ssr) {
+                    if (namespace) {
+                        const componentId = getIdFromNode(node.parent.parent, sourceRoot, ++lastComponentPosition, namespace);
+                        if (componentId) {
+                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId)));
+                        }
+                    } else if (ssr) {
                         const componentId = getIdFromNode(node.parent.parent, sourceRoot, ++lastComponentPosition);
                         if (componentId) {
-                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId))); 
-                        }                                           
+                            styledConfig.push(ts.createPropertyAssignment('componentId', ts.createLiteral(componentId)));
+                        }
                     }
+
+
 
                     if (styledConfig.length > 0) {
                         return ts.createCall(
