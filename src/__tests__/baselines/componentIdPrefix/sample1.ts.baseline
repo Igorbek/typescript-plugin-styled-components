@@ -68,14 +68,14 @@ TypeScript before transform:
 TypeScript after transform:
 
   import styled from 'styled-components';
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "test-1okqsxw" }) \`
+  const Button = styled.button.withConfig({ displayName: "test-Button", componentId: "test-1okqsxw" }) \`
     color: red;
   \`;
   declare const nonStyled: any;
   const NonButton = nonStyled.button \`
     yo
   \`;
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "test-ce0fkl" }) \`
+  const OtherButton = styled(Button).withConfig({ displayName: "test-OtherButton", componentId: "test-ce0fkl" }) \`
     color: blue;
   \`;
   const SuperButton = Button.extend \`
@@ -87,7 +87,7 @@ TypeScript after transform:
   export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "MiniButton", componentId: "test-ndnumj" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "test-MiniButton", componentId: "test-ndnumj" }) \`
     font-size: .1em;
   \`;
   

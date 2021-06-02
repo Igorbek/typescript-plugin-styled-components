@@ -41,13 +41,13 @@ TypeScript after transform:
 
   import styled from 'styled-components';
   export function createButtons() {
-      const A = styled.button.withConfig({ displayName: "A", componentId: "test-hana72" }) \` color: red; \`;
-      const B = styled(A).withConfig({ displayName: "B", componentId: "test-ke4nds" }) \` color: blue; \`;
+      const A = styled.button.withConfig({ displayName: "test-A", componentId: "test-hana72" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-ke4nds" }) \` color: blue; \`;
       return { A, B };
   }
   export function createDivs() {
-      const A = styled.div.withConfig({ displayName: "A", componentId: "test-1q7vmnt" }) \` color: green; \`;
-      const B = styled(A).withConfig({ displayName: "B", componentId: "test-7q8oop" }) \` color: yellow; \`;
+      const A = styled.div.withConfig({ displayName: "test-A", componentId: "test-1q7vmnt" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-7q8oop" }) \` color: yellow; \`;
       return { A, B };
   }
   

@@ -41,12 +41,12 @@ export interface Options {
     minify: boolean;
 
     /**
-     * By adding a namespace, running multiple instances of typescript-plugin-styled-components
+     * By adding a componentIdPrefix, running multiple instances of typescript-plugin-styled-components
      * will not result in clashes caused by the class generation hash.
      *
      * @defaultValue `''`
      */
-    namespace: string;
+     componentIdPrefix: string;
 }
 
 export interface CustomStyledIdentifiers {
