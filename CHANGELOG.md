@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- namespace prefix to help multiple instances of library not clash (fix #381 in #395)
+
 ## [1.5.0]
 
 - transform anonymous default exports (fix #371 in #367)

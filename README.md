@@ -225,6 +225,7 @@ interface Options {
     ssr: boolean;
     displayName: boolean;
     minify: boolean;
+    componentIdPrefix: string;
 }
 ```
 
@@ -274,6 +275,12 @@ The minification is not exactly the same and may produce slightly different resu
 :warning: **Warning**: The minification is an experimental feature, please use with care.
 
 Default value is `false` which means the minification is not being performed.
+
+### `componentIdPrefix`
+
+To avoid colisions when running more than one insance of typescript-plugin-styled-components at a time, you can add a componentIdPrefix by providing an arbitrary string to this option.
+
+Default value is `''` which means that no namespacing will happen.
 
 ### `identifiers`
 
