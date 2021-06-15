@@ -128,6 +128,7 @@ export function createTransformer({
     ssr = true,
     displayName = true,
     minify = false,
+    componentIdPrefix = ''
 }: Partial<Options> = {}) {
     /**
      * Infers display name of a styled component.
@@ -138,7 +139,7 @@ export function createTransformer({
      */
     function getDisplayNameFromNode(node: ts.Node, sourceFile: ts.SourceFile): string | undefined {
         if (isVariableDeclaration(node) && isIdentifier(node.name)) {
-            return getDisplayName(sourceFile.fileName, node.name.text);
+            return (componentIdPrefix ? componentIdPrefix + '-' : '') + getDisplayName(sourceFile.fileName, node.name.text);
         }
 
         if (isExportAssignment(node)) {
@@ -159,7 +160,7 @@ export function createTransformer({
             const filePath = sourceRoot
                 ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep)
                 : fileName;
-            return 'sc-' + hash(`${getDisplayNameFromNode(node, sourceFile)}${filePath}${position}`);
+            return (componentIdPrefix ?? 'sc') + '-' + hash(`${getDisplayNameFromNode(node, sourceFile)}${filePath}${position}`);
         }
         return undefined;
     }

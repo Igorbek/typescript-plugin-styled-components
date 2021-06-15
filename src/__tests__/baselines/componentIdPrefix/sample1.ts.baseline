@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sample1.ts 1`] = `
+
+File: sample1.ts
+Source code:
+
+  import styled from 'styled-components';
+  
+  const Button = styled.button\`
+    color: red;
+  \`;
+  
+  declare const nonStyled: any;
+  
+  const NonButton = nonStyled.button\`
+    yo
+  \`;
+  
+  const OtherButton = styled(Button)\`
+    color: blue;
+  \`;
+  
+  const SuperButton = Button.extend\`
+    color: super;
+  \`;
+  
+  export default styled.link\`
+    color: black;
+  \`;
+  
+  export const SmallButton = Button.extend\`
+    font-size: .7em;
+  \`;
+  
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' })\`
+    font-size: .1em;
+  \`;
+  
+
+TypeScript before transform:
+
+  import styled from "styled-components";
+  const Button = styled.button \`
+    color: red;
+  \`;
+  declare const nonStyled: any;
+  const NonButton = nonStyled.button \`
+    yo
+  \`;
+  const OtherButton = styled(Button) \`
+    color: blue;
+  \`;
+  const SuperButton = Button.extend \`
+    color: super;
+  \`;
+  export default styled.link \`
+    color: black;
+  \`;
+  export const SmallButton = Button.extend \`
+    font-size: .7em;
+  \`;
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }) \`
+    font-size: .1em;
+  \`;
+  
+
+TypeScript after transform:
+
+  import styled from 'styled-components';
+  const Button = styled.button.withConfig({ displayName: "test-Button", componentId: "test-1okqsxw" }) \`
+    color: red;
+  \`;
+  declare const nonStyled: any;
+  const NonButton = nonStyled.button \`
+    yo
+  \`;
+  const OtherButton = styled(Button).withConfig({ displayName: "test-OtherButton", componentId: "test-ce0fkl" }) \`
+    color: blue;
+  \`;
+  const SuperButton = Button.extend \`
+    color: super;
+  \`;
+  export default styled.link.withConfig({ componentId: "test-vba0dl" }) \`
+    color: black;
+  \`;
+  export const SmallButton = Button.extend \`
+    font-size: .7em;
+  \`;
+  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "test-MiniButton", componentId: "test-ndnumj" }) \`
+    font-size: .1em;
+  \`;
+  
+
+
+`;
