@@ -68,26 +68,26 @@ TypeScript before transform:
 TypeScript after transform:
 
   import styled from 'styled-components';
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-1okqsxw" }) \`
+  const Button = styled.button.withConfig({ displayName: "Button", componentId: "-1okqsxw" }) \`
     color: red;
   \`;
   declare const nonStyled: any;
   const NonButton = nonStyled.button \`
     yo
   \`;
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-ce0fkl" }) \`
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "-ce0fkl" }) \`
     color: blue;
   \`;
   const SuperButton = Button.extend \`
     color: super;
   \`;
-  export default styled.link.withConfig({ componentId: "sc-vba0dl" }) \`
+  export default styled.link.withConfig({ componentId: "-vba0dl" }) \`
     color: black;
   \`;
   export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "sc-ndnumj" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "-ndnumj" }) \`
     font-size: .1em;
   \`;
   
@@ -95,25 +95,25 @@ TypeScript after transform:
 TypeScript after transpile module:
 
   import styled from 'styled-components';
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-13dat8f" }) \`
+  const Button = styled.button.withConfig({ displayName: "Button", componentId: "-13dat8f" }) \`
     color: red;
   \`;
   const NonButton = nonStyled.button \`
     yo
   \`;
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-1pbo6g5" }) \`
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "-1pbo6g5" }) \`
     color: blue;
   \`;
   const SuperButton = Button.extend \`
     color: super;
   \`;
-  export default styled.link.withConfig({ componentId: "sc-ep20on" }) \`
+  export default styled.link.withConfig({ componentId: "-ep20on" }) \`
     color: black;
   \`;
   export const SmallButton = Button.extend \`
     font-size: .7em;
   \`;
-  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "sc-1cgykmr" }) \`
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "-1cgykmr" }) \`
     font-size: .1em;
   \`;
   

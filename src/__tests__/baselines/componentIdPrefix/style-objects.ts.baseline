@@ -42,40 +42,40 @@ TypeScript before transform:
 
   declare const styled: any;
   const Button = styled.button({
-      color: "red"
+      color: 'red'
   });
   declare const nonStyled: any;
   const NonButton = nonStyled.button({
-      color: "red"
+      color: 'red'
   });
   const OtherButton = styled(Button)({
-      color: "blue"
+      color: 'blue'
   });
   const SuperButton = Button.extend({
-      color: "super"
+      color: 'super'
   });
   export default styled.link({
-      color: "black"
+      color: 'black'
   });
   export const SmallButton = Button.extend({
-      fontSize: ".7em"
+      fontSize: '.7em'
   });
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" })({
-      fontSize: ".1em"
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' })({
+      fontSize: '.1em'
   });
   
 
 TypeScript after transform:
 
   declare const styled: any;
-  const Button = styled.button.withConfig({ displayName: "test-Button", componentId: "test-7b7p9e" })({
+  const Button = styled.button.withConfig({ displayName: "test-Button", componentId: "test-1qkmci6" })({
       color: 'red'
   });
   declare const nonStyled: any;
   const NonButton = nonStyled.button({
       color: 'red'
   });
-  const OtherButton = styled(Button).withConfig({ displayName: "test-OtherButton", componentId: "test-14ah7t" })({
+  const OtherButton = styled(Button).withConfig({ displayName: "test-OtherButton", componentId: "test-6fha6t" })({
       color: 'blue'
   });
   const SuperButton = Button.extend({
@@ -87,7 +87,32 @@ TypeScript after transform:
   export const SmallButton = Button.extend({
       fontSize: '.7em'
   });
-  const MiniButton = styled(SmallButton).attrs({ size: "mini" }).withConfig({ displayName: "test-MiniButton", componentId: "test-ad4g7l" })({
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "test-MiniButton", componentId: "test-nrep0p" })({
+      fontSize: '.1em'
+  });
+  
+
+TypeScript after transpile module:
+
+  const Button = styled.button.withConfig({ displayName: "test-Button", componentId: "test-1nbxxpw" })({
+      color: 'red'
+  });
+  const NonButton = nonStyled.button({
+      color: 'red'
+  });
+  const OtherButton = styled(Button).withConfig({ displayName: "test-OtherButton", componentId: "test-17xltiv" })({
+      color: 'blue'
+  });
+  const SuperButton = Button.extend({
+      color: 'super'
+  });
+  export default styled.link.withConfig({ componentId: "test-ep20on" })({
+      color: 'black'
+  });
+  export const SmallButton = Button.extend({
+      fontSize: '.7em'
+  });
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "test-MiniButton", componentId: "test-am1bk" })({
       fontSize: '.1em'
   });
   
