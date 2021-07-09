@@ -2,10 +2,15 @@ import * as ts from 'typescript';
 import { isNoSubstitutionTemplateLiteral, isTemplateExpression } from './ts-is-kind';
 
 type State = ';' | ';$' | 'x' | ' ' | '\n' | '"' | '(' | '\'' | '/' | '//' | ';/' | ';//' | '/$' | '//$' | '/*' | '/**' | ';/*' | ';/**' | '/*$' | '/*$*';
-type ReducerResult = { emit?: string; skipEmit?: boolean; state?: State; } | void;
+type StateDataDef = {
+    ['(']: { count: number }
+}
+type StateData<K extends State> = K extends keyof StateDataDef ? StateDataDef[K] : void
+type StateResult = { [K in State]: K extends keyof StateDataDef ? [K, StateDataDef[K]] : K }[State]
+type ReducerResult = { emit?: string; skipEmit?: boolean; state?: StateResult; } | void;
 type StateMachine = {
     [K in State]: {
-        next?(ch: string): ReducerResult;
+        next?(ch: string, data: StateData<K>): ReducerResult;
         flush?(last: boolean): ReducerResult;
     }
 };
@@ -21,7 +26,8 @@ function isSpace(ch: string) {
 const stateMachine: StateMachine = {
     ';': {
         next(ch) {
-            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
+            if (ch == '(') return { state: ['(', {count: 1}]}
+            if (ch == '\'' || ch == '"') return { state: ch }
             if (isSpace(ch)) return { skipEmit: true }
             if (ch == '/') return { state: ';/', skipEmit: true }
             if (isSymbol(ch)) return;
@@ -33,7 +39,8 @@ const stateMachine: StateMachine = {
     },
     ';$': { // after placeholder
         next(ch) {
-            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
+            if (ch == '(') return { state: ['(', {count: 1}]}
+            if (ch == '\'' || ch == '"') return { state: ch }
             if (isSpace(ch)) return { skipEmit: true, state: ' ' } // we may need a space
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
@@ -42,7 +49,8 @@ const stateMachine: StateMachine = {
     },
     'x': {
         next(ch) {
-            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch }
+            if (ch == '(') return { state: ['(', {count: 1}]}
+            if (ch == '\'' || ch == '"') return { state: ch }
             if (isSpace(ch)) return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
@@ -50,7 +58,8 @@ const stateMachine: StateMachine = {
     },
     ' ': { // may need space
         next(ch) {
-            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: ' ' + ch }
+            if (ch == '(') return { state: ['(', {count: 1}], emit: ' ' + ch}
+            if (ch == '\'' || ch == '"') return { state: ch, emit: ' ' + ch }
             if (isSpace(ch)) return { state: ' ', skipEmit: true }
             if (ch == '/') return { state: '/', skipEmit: true }
             if (isSymbol(ch)) return { state: ';' };
@@ -62,7 +71,8 @@ const stateMachine: StateMachine = {
     },
     '\n': { // may need new line
         next(ch) {
-            if (ch == '\'' || ch == '"' || ch == '(') return { state: ch, emit: '\n' + ch }
+            if (ch == '(') return { state: ['(', {count: 1}], emit: '\n' + ch}
+            if (ch == '\'' || ch == '"') return { state: ch, emit: '\n' + ch }
             if (isSpace(ch)) return { state: '\n', skipEmit: true }
             if (ch == '/') return { state: '/', emit: '\n' }
             if (isSymbol(ch)) return { state: ';', emit: '\n' + ch };
@@ -80,8 +90,13 @@ const stateMachine: StateMachine = {
         }
     },
     '(': {
-        next(ch) {
-            if (ch == ')') return { state: ';' };   // maybe return ' '? then it'd always add space after
+        next(ch, { count }) {
+            if (ch == '(') return { state: ['(', { count: count+1 }] }
+            if (ch == ')')
+                if (count > 1)
+                return { state: ['(', { count: count-1 }] }
+            else
+             return { state: ';' };   // maybe return ' '? then it'd always add space after
         }
     },
     '/': {
@@ -179,6 +194,7 @@ const stateMachine: StateMachine = {
 
 export function createMinifier(): (next: string, last?: boolean) => string {
     let state: State = ';';
+    let stateData: StateData<State> = undefined as StateData<';'>
 
     return (next, last = false) => {
         let minified = '';
@@ -189,7 +205,14 @@ export function createMinifier(): (next: string, last?: boolean) => string {
                     minified += ch;
             } else {
                 if (result.state !== undefined)
-                    state = result.state;
+                {
+                    if (typeof result.state === 'string')
+                        state = result.state;
+                    else {
+                        state = result.state[0]
+                        stateData = result.state[1]
+                    }
+                }
                 if (result.emit !== undefined)
                     minified += result.emit;
                 else if (result.skipEmit !== true && ch !== undefined)
@@ -203,7 +226,7 @@ export function createMinifier(): (next: string, last?: boolean) => string {
             const ch = next[pos++];
             const reducer = stateMachine[state];
             const prevState = state;
-            const reducerResult = reducer.next && reducer.next(ch);
+            const reducerResult = reducer.next && reducer.next(ch, stateData as any);
             apply(reducerResult, ch)
             // console.log('next(', { ch, state: prevState }, '): ', reducerResult, ' -> ', { state, minified });
         }
