@@ -11,6 +11,7 @@ interface TransformBaseline {
     content: string;
     source: string;
     transformed: string;
+    transpiled: string;
 }
 
 const serializer = {
@@ -29,6 +30,10 @@ TypeScript after transform:
 
 ${indent(obj.transformed)}
 
+TypeScript after transpile module:
+
+${indent(obj.transpiled)}
+
 `
 };
 
@@ -36,17 +41,28 @@ addSerializer(serializer);
 
 export function expectTransform(transformer: ts.TransformerFactory<ts.SourceFile>, filename: string, path: string, outpath: string) {
     const content = fs.readFileSync(path + '/' + filename).toString();
-    const sourceFile = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest);
+    const sourceFile = ts.createSourceFile(filename, content, ts.ScriptTarget.Latest, /* setParentNodes */ true);
     const source = printer.printFile(sourceFile);
     const transformedFile = ts.transform(sourceFile, [transformer]).transformed[0];
     const transformed = printer.printFile(transformedFile);
+
+    const transpileOutput = ts.transpileModule(content, {
+        compilerOptions: {
+            target: ts.ScriptTarget.Latest
+        },
+        transformers: {
+            before: [transformer]
+        }
+    })
+    const transpiled = transpileOutput.outputText
 
     const snapshot: TransformBaseline = {
         type: 'transform-baseline',
         filename,
         content,
         source,
-        transformed
+        transformed,
+        transpiled
     };
 
     expect(snapshot).toMatchSpecificSnapshot(outpath + '/' + filename + '.baseline');

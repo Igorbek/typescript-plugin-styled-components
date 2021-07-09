@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- **breaking change** upgrade to TypeScript 4+ and make use of Factory API (#379)
+
 ## [1.6.0]
 
 - namespace prefix to help multiple instances of the library not clash (fix #381 in #395)

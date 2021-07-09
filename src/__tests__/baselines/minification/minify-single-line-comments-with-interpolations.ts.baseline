@@ -62,41 +62,41 @@ TypeScript before transform:
   declare const styled: any;
   const Test1 = styled.div \`
     width: 100%;
-    // color: \${"red"};
+    // color: \${'red'};
   \`;
   const Test2 = styled.div \`
     width: 100%;
-    // color: pale\${"red"};
+    // color: pale\${'red'};
   \`;
   const Test3 = styled.div \`
     width: 100%;
     // color
-    \${"red"};
+    \${'red'};
   \`;
   const Test4 = styled.div \`
     width: 100%;
-    // color: \${"red"}-blue;
+    // color: \${'red'}-blue;
   \`;
   const Test5 = styled.div \`
     width: 100%;
-    // color: \${"red"}\${"blue"};
+    // color: \${'red'}\${'blue'};
   \`;
   const Test6 = styled.div \`
     background: url("https://google.com");
     width: 100%;
-    \${"green"} // color: \${"red"}\${"blue"};
+    \${'green'} // color: \${'red'}\${'blue'};
   \`;
   const Test7 = styled.div \`
     background: url("https://google.com");
     width: \${p => p.props.width};
-    \${"green"} // color: \${"red"}\${"blue"};
+    \${'green'} // color: \${'red'}\${'blue'};
     height: \${p => p.props.height};
   \`;
   const Test8 = styled.dev \`
-    color: /* \${"red"} ... disabled */ blue;
+    color: /* \${'red'} ... disabled */ blue;
   \`;
   const Test9 = styled.dev \`
-    color: // \${"red"} ... disabled
+    color: // \${'red'} ... disabled
     blue
   \`;
   export {};
@@ -105,6 +105,22 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
+  const Test1 = styled.div.withConfig({ displayName: "Test1" }) \`width:100%;//\${'red'}\`;
+  const Test2 = styled.div.withConfig({ displayName: "Test2" }) \`width:100%;//\${'red'}\`;
+  const Test3 = styled.div.withConfig({ displayName: "Test3" }) \`width:100%;\${'red'};\`;
+  const Test4 = styled.div.withConfig({ displayName: "Test4" }) \`width:100%;//\${'red'}\`;
+  const Test5 = styled.div.withConfig({ displayName: "Test5" }) \`width:100%;//\${'red'}\${'blue'}\`;
+  const Test6 = styled.div.withConfig({ displayName: "Test6" }) \`background:url("https://google.com");width:100%;\${'green'}//\${'red'}\${'blue'}\`;
+  const Test7 = styled.div.withConfig({ displayName: "Test7" }) \`background:url("https://google.com");width:\${p => p.props.width};\${'green'}//\${'red'}\${'blue'}
+  height:\${p => p.props.height};\`;
+  const Test8 = styled.dev.withConfig({ displayName: "Test8" }) \`color:/*\${'red'}*/blue;\`;
+  const Test9 = styled.dev.withConfig({ displayName: "Test9" }) \`color://\${'red'}
+  blue\`;
+  export {};
+  
+
+TypeScript after transpile module:
+
   const Test1 = styled.div.withConfig({ displayName: "Test1" }) \`width:100%;//\${'red'}\`;
   const Test2 = styled.div.withConfig({ displayName: "Test2" }) \`width:100%;//\${'red'}\`;
   const Test3 = styled.div.withConfig({ displayName: "Test3" }) \`width:100%;\${'red'};\`;

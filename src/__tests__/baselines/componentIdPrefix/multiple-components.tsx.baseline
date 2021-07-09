@@ -24,7 +24,7 @@ Source code:
 
 TypeScript before transform:
 
-  import styled from "styled-components";
+  import styled from 'styled-components';
   export function createButtons() {
       const A = styled.button \` color: red; \`;
       const B = styled(A) \` color: blue; \`;
@@ -41,13 +41,28 @@ TypeScript after transform:
 
   import styled from 'styled-components';
   export function createButtons() {
-      const A = styled.button.withConfig({ displayName: "test-A", componentId: "test-hana72" }) \` color: red; \`;
-      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-ke4nds" }) \` color: blue; \`;
+      const A = styled.button.withConfig({ displayName: "test-A", componentId: "test-h2cmto" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-3cja5" }) \` color: blue; \`;
       return { A, B };
   }
   export function createDivs() {
-      const A = styled.div.withConfig({ displayName: "test-A", componentId: "test-1q7vmnt" }) \` color: green; \`;
-      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-7q8oop" }) \` color: yellow; \`;
+      const A = styled.div.withConfig({ displayName: "test-A", componentId: "test-1oubriv" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-lfixbl" }) \` color: yellow; \`;
+      return { A, B };
+  }
+  
+
+TypeScript after transpile module:
+
+  import styled from 'styled-components';
+  export function createButtons() {
+      const A = styled.button.withConfig({ displayName: "test-A", componentId: "test-1lfj0gb" }) \` color: red; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-kjhsv6" }) \` color: blue; \`;
+      return { A, B };
+  }
+  export function createDivs() {
+      const A = styled.div.withConfig({ displayName: "test-A", componentId: "test-wzcq75" }) \` color: green; \`;
+      const B = styled(A).withConfig({ displayName: "test-B", componentId: "test-6zek9o" }) \` color: yellow; \`;
       return { A, B };
   }
   

@@ -13,12 +13,17 @@ Source code:
 TypeScript before transform:
 
   declare const styled: any;
-  styled.div \`padding: 0 0 13px \${"50px"};\`;
+  styled.div \`padding: 0 0 13px \${'50px'};\`;
   
 
 TypeScript after transform:
 
   declare const styled: any;
+  styled.div \`padding:0 0 13px \${'50px'};\`;
+  
+
+TypeScript after transpile module:
+
   styled.div \`padding:0 0 13px \${'50px'};\`;
   
 

@@ -53,5 +53,11 @@ TypeScript after transform:
   export const StyledDiv = styled.div.withConfig({ displayName: "StyledDiv" }) \`width:100px;height:100px;background-color:greenyellow;animation:\${rotate360} 2s linear infinite;\`;
   
 
+TypeScript after transpile module:
+
+  const rotate360 = keyframes \`from{transform:rotate(0deg);}to{transform:rotate(360deg);}\`;
+  export const StyledDiv = styled.div.withConfig({ displayName: "StyledDiv" }) \`width:100px;height:100px;background-color:greenyellow;animation:\${rotate360} 2s linear infinite;\`;
+  
+
 
 `;

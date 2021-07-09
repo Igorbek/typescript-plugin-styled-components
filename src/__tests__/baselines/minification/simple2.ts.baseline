@@ -43,5 +43,17 @@ TypeScript after transform:
   styled.div \`a b (  c  )d\`; // \`a b (  c  )d\`
   
 
+TypeScript after transpile module:
+
+  // spaces before and after ' " ( )
+  styled.div \`a b"  c  "d\`; // \`a b"  c  "d\`
+  styled.div \`a b'  c  'd\`; // \`a b'  c  'd\`
+  styled.div \`a b(  c  )d\`; // \`a b(  c  )d\`
+  styled.div \`a b "  c  "d\`; // \`a b "  c  "d\`
+  styled.div \`a b '  c  'd\`; // \`a b '  c  'd\`
+  styled.div \`a b (  c  )d\`; // \`a b (  c  )d\`
+  export {};
+  
+
 
 `;

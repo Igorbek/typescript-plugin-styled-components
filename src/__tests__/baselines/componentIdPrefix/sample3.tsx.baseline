@@ -24,14 +24,14 @@ Source code:
 
 TypeScript before transform:
 
-  import * as React from "react";
-  import styled from "../themed-styled";
-  import { SmallButton } from "./sample1";
+  import * as React from 'react';
+  import styled from '../themed-styled';
+  import { SmallButton } from './sample1';
   interface LabelProps {
       size: number;
   }
   const CustomLabel = styled.label \`
-      font-size: \${(props: LabelProps) => props.size + "px"}
+      font-size: \${(props: LabelProps) => props.size + 'px'}
   \`;
   const LabeledLink = () => <SmallButton />;
   export default CustomLabel;
@@ -45,10 +45,20 @@ TypeScript after transform:
   interface LabelProps {
       size: number;
   }
-  const CustomLabel = styled.label.withConfig({ displayName: "test-CustomLabel", componentId: "test-1ydgk9x" }) \`
+  const CustomLabel = styled.label.withConfig({ displayName: "test-CustomLabel", componentId: "test-xtd6b" }) \`
       font-size: \${(props: LabelProps) => props.size + 'px'}
   \`;
   const LabeledLink = () => <SmallButton />;
+  export default CustomLabel;
+  
+
+TypeScript after transpile module:
+
+  import styled from '../themed-styled';
+  const CustomLabel = styled.label.withConfig({ displayName: "test-CustomLabel", componentId: "test-mqylua" }) \`
+      font-size: \${(props) => props.size + 'px'}
+  \`;
+  const LabeledLink = () => />;;
   export default CustomLabel;
   
 
