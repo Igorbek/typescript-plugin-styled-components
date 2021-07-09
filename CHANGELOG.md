@@ -3,7 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+## [2.0.0]
+
 - **breaking change** upgrade to TypeScript 4+ and make use of Factory API (#379)
+- bugfix in minification of `calc()` (fix #233 in #436)
 
 ## [1.6.0]
 
@@ -70,7 +73,8 @@ All notable changes to this project will be documented in this file.
 - updated `typescript` dependency to support TS 3.0+ (#17, fixed #15)
 - remove `ts-is-kind` dependency (#17, fixed #16)
 
-[Unreleased]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.6.0...HEAD
+[Unreleased]: https://github.com/igorbek/typescript-plugin-styled-components/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.6.0...2.0.0
 [1.6.0]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.4...1.5.0
 [1.4.4]: https://github.com/igorbek/typescript-plugin-styled-components/compare/1.4.3...1.4.4
