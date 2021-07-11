@@ -1,0 +1,28 @@
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+strategy:
+  matrix:
+    node_8_x:
+      node_version: 8.x
+    node_9_x:
+      node_version: 9.x
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: $(node_version)
+  displayName: 'Use Node.js $(node_version)'
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-installer-task.YarnInstaller@2
+  displayName: 'Use Yarn 1.x'
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: 'Yarn Install'
+  inputs:
+    Arguments: '--pure-lockfile'
+
+- task: geeklearningio.gl-vsts-tasks-yarn.yarn-task.Yarn@2
+  displayName: Test
+  inputs:
+    Arguments: 'run test'
