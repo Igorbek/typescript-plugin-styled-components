@@ -26,7 +26,7 @@
     "devDependencies": {
         "@types/jest": "^25.2.1",
         "@types/jest-specific-snapshot": "^0.5.4",
-        "@types/node": "^13.1.2",
+        "@types/node": "^16.4.10",
         "@types/react": "^16.7.22",
         "@types/styled-components": "^5.1.9",
         "jest": "^24.1.0",
