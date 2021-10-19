@@ -45,7 +45,7 @@ TypeScript after transform:
   interface LabelProps {
       size: number;
   }
-  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "-1ydgk9x" }) \`
+  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "sc-1ydgk9x" }) \`
       font-size: \${(props: LabelProps) => props.size + 'px'}
   \`;
   const LabeledLink = () => <SmallButton />;
@@ -55,7 +55,7 @@ TypeScript after transform:
 TypeScript after transpile module:
 
   import styled from '../themed-styled';
-  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "-xc3x4h" }) \`
+  const CustomLabel = styled.label.withConfig({ displayName: "CustomLabel", componentId: "sc-xc3x4h" }) \`
       font-size: \${(props) => props.size + 'px'}
   \`;
   const LabeledLink = () => />;;

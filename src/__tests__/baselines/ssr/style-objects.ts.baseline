@@ -68,51 +68,51 @@ TypeScript before transform:
 TypeScript after transform:
 
   declare const styled: any;
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "-7b7p9e" })({
+  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-7b7p9e" })({
       color: 'red'
   });
   declare const nonStyled: any;
   const NonButton = nonStyled.button({
       color: 'red'
   });
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "-14ah7t" })({
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-14ah7t" })({
       color: 'blue'
   });
   const SuperButton = Button.extend({
       color: 'super'
   });
-  export default styled.link.withConfig({ componentId: "-8xjslt" })({
+  export default styled.link.withConfig({ componentId: "sc-8xjslt" })({
       color: 'black'
   });
   export const SmallButton = Button.extend({
       fontSize: '.7em'
   });
-  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "-ad4g7l" })({
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "sc-ad4g7l" })({
       fontSize: '.1em'
   });
   
 
 TypeScript after transpile module:
 
-  const Button = styled.button.withConfig({ displayName: "Button", componentId: "-13dat8f" })({
+  const Button = styled.button.withConfig({ displayName: "Button", componentId: "sc-13dat8f" })({
       color: 'red'
   });
   const NonButton = nonStyled.button({
       color: 'red'
   });
-  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "-1pbo6g5" })({
+  const OtherButton = styled(Button).withConfig({ displayName: "OtherButton", componentId: "sc-1pbo6g5" })({
       color: 'blue'
   });
   const SuperButton = Button.extend({
       color: 'super'
   });
-  export default styled.link.withConfig({ componentId: "-ep20on" })({
+  export default styled.link.withConfig({ componentId: "sc-ep20on" })({
       color: 'black'
   });
   export const SmallButton = Button.extend({
       fontSize: '.7em'
   });
-  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "-1cgykmr" })({
+  const MiniButton = styled(SmallButton).attrs({ size: 'mini' }).withConfig({ displayName: "MiniButton", componentId: "sc-1cgykmr" })({
       fontSize: '.1em'
   });
   
