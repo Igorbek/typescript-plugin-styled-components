@@ -12,7 +12,7 @@
     "dev": "cross-env NODE_ENV=development webpack-cli --config webpack/config.server.js && node dist/server"
   },
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-router": "^4.3.1",
