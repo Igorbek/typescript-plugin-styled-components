@@ -112,7 +112,7 @@ To solve this please refer to [Forked process configuration](#forked-process-con
 
 ## Forked process configuration
 
-To configure the transformer for development mode in `awesome-typescript-loader` or `ts-loader` with `HappyPack` or `thread-loader`, you need to make `getCustomTransformers` a resolvoble module name instead of the function. Since the configuration is very similar, here's an example:
+To configure the transformer for development mode in `awesome-typescript-loader` or `ts-loader` with `HappyPack` or `thread-loader`, you need to make `getCustomTransformers` a resolvable module name instead of the function. Since the configuration is very similar, here's an example:
 
 ### 1. Move `styledComponentsTransformer` into a separate file
 
