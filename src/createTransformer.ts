@@ -160,7 +160,7 @@ export function createTransformer({
             const filePath = sourceRoot
                 ? path.relative(sourceRoot, fileName).replace(path.sep, path.posix.sep)
                 : fileName;
-            return (componentIdPrefix ?? 'sc') + '-' + hash(`${getDisplayNameFromNode(node, sourceFile)}${filePath}${position}`);
+            return (componentIdPrefix || 'sc') + '-' + hash(`${getDisplayNameFromNode(node, sourceFile)}${filePath}${position}`);
         }
         return undefined;
     }
