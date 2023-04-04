@@ -261,7 +261,7 @@ export function createTransformer({
                 );
 
             const updateExportAssignmentExpression = (node: ts.ExportAssignment, expression: ts.Expression) =>
-                context.factory.updateExportAssignment(node, node.decorators, node.modifiers, expression);
+                context.factory.updateExportAssignment(node, node.modifiers, expression);
 
             const transformNode = (node: ts.Node) =>
                 isVariableDeclaration(node) && node.initializer
