@@ -15,6 +15,8 @@ type StateMachine = {
     }
 };
 
+let a: number = 'a'; // sample error
+
 function isSymbol(ch: string) {
     return ch == ';' || ch == ':' || ch == '{' || ch == '}' || ch == ',';
 }
