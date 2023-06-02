@@ -64,8 +64,7 @@ TypeScript after transform:
   declare const theColor: any;
   const key = keyframes \`to{transform:rotate(360deg);}\`;
   const color = css \`color:\${theColor};\`;
-  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}
-  }\`;
+  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}\\n}\`;
   export {};
   
 
@@ -73,8 +72,7 @@ TypeScript after transpile module:
 
   const key = keyframes \`to{transform:rotate(360deg);}\`;
   const color = css \`color:\${theColor};\`;
-  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}
-  }\`;
+  const MyRedBody = createGlobalStyle \`body{background-color:red;\${color}//\${color}\\n}\`;
   export {};
   
 
