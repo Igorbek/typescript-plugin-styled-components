@@ -261,7 +261,7 @@ export function createTransformer({
                 );
 
             const updateExportAssignmentExpression = (node: ts.ExportAssignment, expression: ts.Expression) =>
-                context.factory.updateExportAssignment(node, node.decorators, node.modifiers, expression);
+                context.factory.updateExportAssignment(node, node.modifiers, expression);
 
             const transformNode = (node: ts.Node) =>
                 isVariableDeclaration(node) && node.initializer
@@ -282,7 +282,7 @@ export function createTransformer({
 
             const visitNode: ts.Visitor = (node) => transformNode(node) || ts.visitEachChild(node, visitNode, context);
 
-            return ts.visitNode(sourceFile, visitNode);
+            return ts.visitNode(sourceFile, visitNode) as ts.SourceFile;
         };
     };
 
