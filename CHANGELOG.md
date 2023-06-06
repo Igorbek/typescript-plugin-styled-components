@@ -1,7 +1,11 @@
 # Changelog
-All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [3.0.0]
+
+- **breaking change** upgrade to TypeScript 4.8+/5.0+ in #713
+- Restore `componentIdPrefix` fallback to getIdFromNode by @roikoren755 in #518
+- GitHub Actions setup by @probablyup in #712
+- Update README.md by @RockinRonE in #473
 
 ## [2.0.0]
 
