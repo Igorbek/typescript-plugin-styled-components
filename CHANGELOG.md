@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.1
+
+### Patch Changes
+
+- 0170235: testing the changeset
+
 ## [3.0.0]
 
 - **breaking change** upgrade to TypeScript 4.8+/5.0+ in #713
